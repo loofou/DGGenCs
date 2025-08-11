@@ -1,5 +1,7 @@
 ---
 - name: U.S.A.
   nationality: American
+  native_language: English
 - name: U.K.
   nationality: British
+  native_language: English

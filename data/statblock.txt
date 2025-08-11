@@ -1,4 +1,18 @@
 {name}
-{label}
+{label}, {sex}, {age}
 
-{attributes}
+{statistics}
+{derived_statistics}
+
+{bonds}
+{motivations_disorders}
+
+{armor}
+
+{skills}
+{special_training}
+
+{attacks}
+{equipment}
+
+{notes}

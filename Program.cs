@@ -1,5 +1,6 @@
 ﻿using System.CommandLine;
 using Spectre.Console;
+using Spectre.Console.Cli.Help;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -15,6 +16,7 @@ public class Program
         {
             Description = "Profession of the character to generate",
             DefaultValueFactory = _ => "cid",
+            Arity = ArgumentArity.ZeroOrOne,
         };
         rootCommand.Options.Add(professionOption);
 
@@ -22,6 +24,7 @@ public class Program
         {
             Description = "Number of characters to generate",
             DefaultValueFactory = _ => 1,
+            Arity = ArgumentArity.ZeroOrOne,
         };
         countOption.Validators.Add(result =>
         {
@@ -32,13 +35,23 @@ public class Program
         });
         rootCommand.Options.Add(countOption);
 
+        Option<bool> verboseOption = new("--verbose", "-v")
+        {
+            Description = "Enable verbose output",
+            DefaultValueFactory = _ => false,
+            Arity = ArgumentArity.ZeroOrOne,
+        };
+        rootCommand.Options.Add(verboseOption);
+
         rootCommand.SetAction(
             (parseResult) =>
             {
                 int count = parseResult.GetValue(countOption);
                 string professionName = parseResult.GetValue(professionOption) ?? "cid"; //TODO: Randomize
 
-                Generate(count, professionName);
+                bool verbose = parseResult.GetValue(verboseOption);
+
+                Generate(count, professionName, verbose);
             }
         );
 
@@ -49,30 +62,36 @@ public class Program
         return parseResult.Invoke();
     }
 
-    private static void Generate(int count, string professionName)
+    private static void Generate(int count, string professionName, bool verbose)
     {
         for (int i = 0; i < count; i++)
         {
-            IDeserializer deserializer = new DeserializerBuilder()
-                .IgnoreUnmatchedProperties()
-                .WithNamingConvention(UnderscoredNamingConvention.Instance)
-                .Build();
-
-            // Load nations from YAML file
-            string yamlContent = File.ReadAllText("data/professions.yaml");
-            Dictionary<string, Profession> professions = deserializer.Deserialize<
-                Dictionary<string, Profession>
-            >(yamlContent);
-
-            Profession profession = professions[professionName];
+            Profession profession = GetProfession(professionName);
 
             AnsiConsole.MarkupLine($"[blue]Generating character {i + 1} of {count}...[/]");
-            Character character = CharGen.GenerateNewCharacter(profession);
+            Character character = CharGen.GenerateNewCharacter(profession, verbose: verbose);
 
             AnsiConsole.MarkupLine($"[green]Character {character.Name} generated.[/]");
             string output = character.ToString();
 
             File.WriteAllText(Path.Combine("out", $"Character_{i + 1}.txt"), output);
         }
+    }
+
+    private static Profession GetProfession(string professionName)
+    {
+        IDeserializer deserializer = new DeserializerBuilder()
+            .IgnoreUnmatchedProperties()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+        // Load nations from YAML file
+        string yamlContent = File.ReadAllText("data/professions.yaml");
+        Dictionary<string, Profession> professions = deserializer.Deserialize<
+            Dictionary<string, Profession>
+        >(yamlContent);
+
+        Profession profession = professions[professionName];
+        return profession;
     }
 }

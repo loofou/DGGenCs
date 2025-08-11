@@ -1,0 +1,193 @@
+artist: 
+- alertness
+- craft1
+- disguise
+- persuade
+- art1
+- art2
+- art3
+- HUMINT
+
+athlete: 
+- alertness
+- athletics
+- dodge
+- first aid
+- HUMINT
+- persuade
+- swim
+- unarmed combat
+
+author:
+- anthropology
+- art (writing)
+- bureaucracy
+- history
+- law
+- occult
+- persuade
+- HUMINT
+
+black_bag_training:
+- alertness
+- athletics
+- craft (electrician)
+- craft (locksmithing)
+- criminology
+- disguise
+- search
+- stealth
+
+blue_collar_worker:
+- alertness
+- craft1
+- craft2
+- drive
+- first aid
+- heavy machinery
+- navigate
+- search
+
+bureaucrat:
+- accounting
+- bureaucracy
+- computer science
+- criminology
+- HUMINT
+- law
+- persuade
+
+clergy:
+- foreign language1
+- foreign language2
+- foreign language3
+- history
+- HUMINT
+- occult
+- persuade
+- psychotherapy
+
+combat_veteran:
+- alertness
+- dodge
+- firearms
+- first aid
+- heavy weapons
+- melee weapons
+- stealth
+- unarmed combat
+
+computer_enthusiast_or_hacker:
+- computer science
+- craft (microelectronics)
+- science (mathematics)
+- SIGINT
+
+counselor:
+- bureaucracy
+- first aid
+- foreign language1
+- HUMINT
+- law
+- persuade
+- psychotherapy
+- search
+
+criminalist:
+- accounting
+- bureaucracy
+- computer science
+- criminology
+- forensics
+- law
+- pharmacy
+- search
+
+firefighter:
+- alertness
+- demolitions
+- drive
+- first aid
+- forensics
+- heavy machinery
+- navigate
+- search
+
+gangster:
+- alertness
+- criminology
+- dodge
+- drive
+- persuade
+- stealth
+- athletics|foreign language1|firearms|HUMINT|melee weapons|pharmacy|unarmed combat
+- athletics|foreign language1|firearms|HUMINT|melee weapons|pharmacy|unarmed combat
+
+interrogator:
+- criminology
+- foreign language1
+- foreign language2
+- HUMINT
+- law
+- persuade
+- pharmacy
+- search
+
+liberal_arts:
+- anthropology|archeology
+- art
+- foreign language
+- history
+- persuade
+
+military_officer:
+- bureaucracy
+- firearms
+- history
+- military science1
+- artillery|heavy machinery|heavy weapons|HUMINT|pilot1|SIGINT
+
+mba:
+- accounting
+- bureaucracy
+- HUMINT
+- law
+- persuade
+
+nurse:
+- alertness
+- first aid
+- medicine
+- persuade
+- pharmacy
+- psychotherapy
+- science (biology)
+- search
+
+occult_investigator:
+- anthropology
+- archeology
+- computer science
+- criminology
+- history
+- occult
+- persuade
+- search
+
+outdoorsman:
+- alertness
+- athletics
+- firearms
+- navigate
+- ride
+- search
+- stealth
+- survival
+
+photographer:
+- alertness
+- art (photography)
+- computer science
+- persuade
+- search
+- stealth
