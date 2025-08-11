@@ -1,0 +1,31 @@
+cid:
+  label: Federal Agent
+  employer: FBI
+  division: CID
+  skills:
+    fixed:
+    - alertness: 50
+    - bureaucracy: 40
+    - criminology: 50
+    - drive: 50
+    - firearms: 50
+    - forensics: 30
+    - humint: 60
+    - law: 30
+    - persuade: 50
+    - search: 50
+    - unarmed combat: 60
+    possible-count: 1
+    possible:
+    - accounting: 60
+    - computer science: 50
+    - language1: 50
+    - heavy weapons: 50
+    - pharmacy: 50
+    bonus:
+    - criminology
+    - forensics
+    - firearms
+    - law
+  bonds: 3
+  equipment-kit: agent

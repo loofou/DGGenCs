@@ -1,0 +1,5 @@
+---
+- name: U.S.A.
+  nationality: American
+- name: U.K.
+  nationality: British
