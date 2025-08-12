@@ -133,6 +133,10 @@ public static class CharGen
         List<string> bonds = GenerateBonds(profession, verbose);
         List<string> specialTraining = GenerateSpecialTraining(profession, verbose);
 
+        List<Weapon> attacks = GenerateAttacks(profession, skills, verbose);
+        List<Armor> armor = GenerateArmor(profession, verbose);
+        List<string> equipment = GenerateEquipment(profession, verbose);
+
         return new(
             name,
             profession,
@@ -141,7 +145,10 @@ public static class CharGen
             derivedStats,
             skills,
             bonds,
-            specialTraining
+            specialTraining,
+            attacks,
+            armor,
+            equipment
         );
     }
 
@@ -614,6 +621,187 @@ public static class CharGen
             Console.WriteLine($"Special Training: {string.Join(", ", specialTrainings)}");
 
         return specialTrainings;
+    }
+
+    static List<Weapon> GenerateAttacks(
+        Profession profession,
+        Dictionary<string, int> skills,
+        bool verbose = false
+    )
+    {
+        string yamlContent = File.ReadAllText("data/gear.yaml");
+        IDeserializer deserializer = new DeserializerBuilder()
+            .IgnoreUnmatchedProperties()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+        Gear gear = deserializer.Deserialize<Gear>(yamlContent);
+
+        yamlContent = File.ReadAllText("data/gear_kits.yaml");
+        Dictionary<string, GearKit> gearKits = deserializer.Deserialize<
+            Dictionary<string, GearKit>
+        >(yamlContent);
+
+        string gearKitName = profession.GearKit;
+
+        List<Weapon> attacks = [];
+        if (gearKitName is not null && gearKits.TryGetValue(gearKitName, out GearKit gearKit))
+        {
+            if (gearKit.Weapons is not null)
+            {
+                foreach (GearItem weaponItem in gearKit.Weapons)
+                {
+                    if (
+                        weaponItem.Chance is not null
+                        && Random.Shared.Next(0, 100) >= weaponItem.Chance
+                    )
+                    {
+                        continue; // Skip this weapon if the chance condition is not met
+                    }
+
+                    if (gear.Weapons.TryGetValue(weaponItem.Item, out Weapon weapon))
+                    {
+                        if (skills.TryGetValue(weapon.Skill, out int skillValue))
+                        {
+                            attacks.Add(weapon);
+                        }
+                        else
+                        {
+                            throw new KeyNotFoundException(
+                                $"Weapon Skill '{weapon.Skill}' not found in learned skills. ({weaponItem.Item})"
+                            );
+                        }
+                    }
+                    else
+                    {
+                        throw new KeyNotFoundException(
+                            $"Weapon '{weaponItem.Item}' not found in gear.yaml"
+                        );
+                    }
+                }
+            }
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Gear kit '{gearKitName}' not found in gear_kits.yaml");
+        }
+
+        if (verbose)
+            Console.WriteLine($"Attacks: {string.Join(", ", attacks)}");
+
+        return attacks;
+    }
+
+    static List<Armor> GenerateArmor(Profession profession, bool verbose = false)
+    {
+        string yamlContent = File.ReadAllText("data/gear.yaml");
+        IDeserializer deserializer = new DeserializerBuilder()
+            .IgnoreUnmatchedProperties()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+        Gear gear = deserializer.Deserialize<Gear>(yamlContent);
+
+        yamlContent = File.ReadAllText("data/gear_kits.yaml");
+        Dictionary<string, GearKit> gearKits = deserializer.Deserialize<
+            Dictionary<string, GearKit>
+        >(yamlContent);
+
+        string gearKitName = profession.GearKit;
+
+        List<Armor> armor = [];
+        if (gearKitName is not null && gearKits.TryGetValue(gearKitName, out GearKit gearKit))
+        {
+            if (gearKit.Armor is not null)
+            {
+                foreach (GearItem armorItem in gearKit.Armor)
+                {
+                    if (
+                        armorItem.Chance is not null
+                        && Random.Shared.Next(0, 100) >= armorItem.Chance
+                    )
+                    {
+                        continue; // Skip this armor if the chance condition is not met
+                    }
+
+                    if (gear.Armor.TryGetValue(armorItem.Item, out Armor armorPiece))
+                    {
+                        armor.Add(armorPiece);
+                    }
+                    else
+                    {
+                        throw new KeyNotFoundException(
+                            $"Armor '{armorItem.Item}' not found in gear.yaml"
+                        );
+                    }
+                }
+            }
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Gear kit '{gearKitName}' not found in gear_kits.yaml");
+        }
+
+        if (verbose)
+            Console.WriteLine($"Armor: {string.Join(", ", armor)}");
+
+        return armor;
+    }
+
+    static List<string> GenerateEquipment(Profession profession, bool verbose = false)
+    {
+        string yamlContent = File.ReadAllText("data/gear.yaml");
+        IDeserializer deserializer = new DeserializerBuilder()
+            .IgnoreUnmatchedProperties()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+        Gear gear = deserializer.Deserialize<Gear>(yamlContent);
+
+        yamlContent = File.ReadAllText("data/gear_kits.yaml");
+        Dictionary<string, GearKit> gearKits = deserializer.Deserialize<
+            Dictionary<string, GearKit>
+        >(yamlContent);
+
+        string gearKitName = profession.GearKit;
+
+        List<string> equipment = [];
+        if (gearKitName is not null && gearKits.TryGetValue(gearKitName, out GearKit gearKit))
+        {
+            if (gearKit.Other is not null)
+            {
+                foreach (GearItem otherItem in gearKit.Other)
+                {
+                    if (
+                        otherItem.Chance is not null
+                        && Random.Shared.Next(0, 100) >= otherItem.Chance
+                    )
+                    {
+                        continue; // Skip this item if the chance condition is not met
+                    }
+
+                    if (gear.Other.TryGetValue(otherItem.Item, out string? item))
+                    {
+                        equipment.Add(item);
+                    }
+                    else
+                    {
+                        throw new KeyNotFoundException(
+                            $"Other item '{otherItem.Item}' not found in gear.yaml"
+                        );
+                    }
+                }
+            }
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Gear kit '{gearKitName}' not found in gear_kits.yaml");
+        }
+
+        if (verbose)
+            Console.WriteLine($"Equipment: {string.Join(", ", equipment)}");
+
+        return equipment;
     }
 
     static NPCType AgeToNPCType(int age)

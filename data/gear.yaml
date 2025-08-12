@@ -1,0 +1,117 @@
+weapons:
+  unarmed:
+    name: Unarmed Attack
+    skill: unarmed combat
+    damage: 1d4-1
+  knife:
+    name: Knife
+    skill: melee combat
+    damage: 1d4
+    armor_piercing: 3
+  club:
+    name: Club
+    skill: melee combat
+    damage: 1d6
+
+  stun_gun:
+    name: Stun Gun
+    stat: DEX
+  shock_baton:
+    name: Shock Baton
+    stat: DEX
+  ced_pistol:
+    name: CED Pistol
+    skill: firearms
+
+  light_pistol:
+    name: Light Pistol
+    skill: firearms
+    damage: 1d8
+  medium_pistol:
+    name: Medium Pistol
+    skill: firearms
+    damage: 1d10
+  heavy_pistol:
+    name: Heavy Pistol
+    skill: firearms
+    damage: 1d12
+  shotgun:
+    name: Shotgun
+    skill: firearms
+    damage: 2d8
+  carbine:
+    name: Carbine
+    skill: firearms
+    damage: 1d12
+    armor_piercing: 3
+    lethality: 10
+  smg:
+    name: Submachine Gun
+    skill: firearms
+    damage: 1d10
+    lethality: 10
+  heavy_rifle:
+    name: Heavy Rifle
+    skill: firearms
+    damage: 1d12+2
+    armor_piercing: 5
+    lethality: 10
+
+  hand_grenade:
+    name: Hand Grenade
+    skill: athletics
+    lethality: 15
+  flash_grenade:
+    name: Flash Grenade
+    skill: athletics
+  tear_gas_grenade:
+    name: Tear Gas Grenade
+    skill: athletics
+
+armor:
+  riot_helmet:
+    name: Riot Helmet
+    armor_rating: 1
+  kevlar_helmet:
+    name: Kevlar Helmet
+    armor_rating: 1
+  kevlar_vest:
+    name: Kevlar Vest
+    armor_rating: 3
+  reinforced_vest:
+    name: Reinforced Kevlar Vest
+    armor_rating: 4
+  tactical_vest:
+    name: Tactical Body Armor
+    armor_rating: 5
+
+other:
+  motorcycle: Motorcycle
+  sedan: Sedan
+  suv: SUV
+  flexible_cuffs: Flexible Cuffs
+  handcuffs: Handcuffs
+  burner_phone: Burner Phone
+  walkie_talkie: Walkie Talkie
+  smartphone: Smartphone
+  laptop: Laptop
+  tablet: Tablet
+  earpiece: Earpiece
+  basic_drone: Basic Drone
+  bug_detector: Bug Detector
+  flashlight: Large Flashlight
+  binoculars: Binoculars
+  lockpick_set: Lockpick Set
+  lockpick_gun: Lockpick Gun
+  first_aid_kit: First Aid Kit
+  fire_extinguisher: Fire Extinguisher
+  handheld_gps: Handheld GPS
+  camping_gear: Camping Gear
+  ppe: Personal Protective Equipment (PPE)
+  gas_mask: Gas Mask
+  scuba_gear: SCUBA Gear
+  sound_supressor: Sound Suppressor
+  laser_sight: Laser Sight
+  night_vision_goggles: Night Vision Goggles
+  badge: Badge
+  id_card: ID Card

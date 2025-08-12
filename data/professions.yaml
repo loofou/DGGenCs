@@ -40,4 +40,4 @@ cid:
       - exotic_firearm
       - hand_grenades
   bonds: 3
-  equipment-kit: agent
+  gear_kit: agent

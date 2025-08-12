@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -42,7 +41,8 @@ public record struct Profession(
     ProfessionSkillPack Skills,
     int Bonds,
     ProfessionNPCConfig Npc,
-    ProfessionSpecialTraining SpecialTraining
+    ProfessionSpecialTraining SpecialTraining,
+    string GearKit
 );
 
 public record struct Nation(string Name, string Nationality, string NativeLanguage);
@@ -65,6 +65,18 @@ public record struct Statistics(
     int Charisma
 )
 {
+    public readonly int this[string stat] =>
+        stat.ToUpperInvariant() switch
+        {
+            "STR" => Strength,
+            "CON" => Constitution,
+            "DEX" => Dexterity,
+            "INT" => Intelligence,
+            "POW" => Power,
+            "CHA" => Charisma,
+            _ => throw new ArgumentException($"Unknown statistic: {stat}"),
+        };
+
     public override readonly string ToString() =>
         $"STR {Strength} CON {Constitution} DEX {Dexterity} INT {Intelligence} POW {Power} CHA {Charisma}";
 };
@@ -75,6 +87,27 @@ public record struct DerivedStatistics(int HP, int WP, int SAN, int BreakingPoin
         $"HP {HP} WP {WP} SAN {SAN} BREAKING POINT {BreakingPoint}";
 };
 
+public record struct Gear(
+    Dictionary<string, Weapon> Weapons,
+    Dictionary<string, Armor> Armor,
+    Dictionary<string, string> Other
+);
+
+public record struct Weapon(
+    string Name,
+    string Skill = "",
+    string Stat = "",
+    string Damage = "",
+    int ArmorPiercing = 0,
+    int Lethality = 0
+);
+
+public record struct Armor(string Name, int ArmorRating);
+
+public record struct GearItem(string Item, int? Chance = null);
+
+public record struct GearKit(List<GearItem> Weapons, List<GearItem> Armor, List<GearItem> Other);
+
 public partial record Character(
     string Name,
     Profession Profession,
@@ -83,7 +116,10 @@ public partial record Character(
     DerivedStatistics DerivedStats,
     Dictionary<string, int> Skills,
     List<string> Bonds,
-    List<string> SpecialTraining
+    List<string> SpecialTraining,
+    List<Weapon> Attacks,
+    List<Armor> Armor,
+    List<string> Equipment
 )
 {
     [GeneratedRegex(@"(\r?\n){3,}")]
@@ -92,6 +128,16 @@ public partial record Character(
     public override string ToString()
     {
         TextInfo ti = CultureInfo.InvariantCulture.TextInfo;
+
+        string attacks = string.Join(
+            "\n",
+            Attacks.Select(a =>
+                $"{a.Name} {(a.Skill != "" ? Skills[a.Skill] : Stats[a.Stat] * 5)}%"
+                + $"{(a.Damage != "" ? $", Damage {a.Damage}" : string.Empty)}"
+                + $"{(a.Lethality > 0 ? $", Lethality {a.Lethality}%" : string.Empty)}"
+                + $"{(a.ArmorPiercing > 0 ? $", Armor Piercing {a.ArmorPiercing}" : string.Empty)}."
+            )
+        );
 
         Dictionary<string, string> props = new()
         {
@@ -112,13 +158,23 @@ public partial record Character(
             },
             {
                 @"{special_training}",
-                $"SPECIAL TRAINING: {string.Join(", ", SpecialTraining.Select(s => ti.ToTitleCase(s)))}"
+                SpecialTraining.Count > 0
+                    ? $"SPECIAL TRAINING: {string.Join(", ", SpecialTraining.Select(s => ti.ToTitleCase(s)))}"
+                    : ""
             },
             { @"{bonds}", $"BONDS: {string.Join(", ", Bonds)}" },
-            { @"{motivations_disorders}", "" },
-            { @"{armor}", "" },
-            { @"{attacks}", "" },
-            { @"{equipment}", "" },
+            { @"{motivations_disorders}", string.Empty },
+            {
+                @"{armor}",
+                Armor.Count > 0
+                    ? $"ARMOR: {string.Join("\n", Armor.Select(a => $"{a.Name} (Armor {a.ArmorRating})."))}"
+                    : ""
+            },
+            { @"{attacks}", Attacks.Count > 0 ? $"ATTACKS: {attacks}" : string.Empty },
+            {
+                @"{equipment}",
+                Equipment.Count > 0 ? $"EQUIPMENT: {string.Join(", ", Equipment)}" : string.Empty
+            },
             {
                 @"{notes}",
                 $"EMPLOYER: {Demographics.Employer}, NATIONALITY: {Demographics.Nationality.Nationality} ({Demographics.Nationality.Name})"
