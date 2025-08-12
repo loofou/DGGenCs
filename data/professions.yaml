@@ -19,7 +19,7 @@ cid:
     pick:
       accounting: 60
       computer science: 50
-      foreign language1: 50
+      foreign language (*): 50
       heavy weapons: 50
       pharmacy: 50
   bonds: 3

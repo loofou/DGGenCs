@@ -35,6 +35,14 @@ public class Program
         });
         rootCommand.Options.Add(countOption);
 
+        Option<bool> randomNationalityOption = new("--random-nationality", "-r")
+        {
+            Description = "Generate characters with random nationalities. Otherwise uses the USA.",
+            DefaultValueFactory = _ => false,
+            Arity = ArgumentArity.ZeroOrOne,
+        };
+        rootCommand.Options.Add(randomNationalityOption);
+
         Option<bool> verboseOption = new("--verbose", "-v")
         {
             Description = "Enable verbose output",
@@ -48,10 +56,11 @@ public class Program
             {
                 int count = parseResult.GetValue(countOption);
                 string professionName = parseResult.GetValue(professionOption) ?? "cid"; //TODO: Randomize
+                bool randomNationality = parseResult.GetValue(randomNationalityOption);
 
                 bool verbose = parseResult.GetValue(verboseOption);
 
-                Generate(count, professionName, verbose);
+                Generate(count, professionName, randomNationality, verbose);
             }
         );
 
@@ -62,14 +71,23 @@ public class Program
         return parseResult.Invoke();
     }
 
-    private static void Generate(int count, string professionName, bool verbose)
+    private static void Generate(
+        int count,
+        string professionName,
+        bool randomNationality,
+        bool verbose
+    )
     {
         for (int i = 0; i < count; i++)
         {
             Profession profession = GetProfession(professionName);
 
             AnsiConsole.MarkupLine($"[blue]Generating character {i + 1} of {count}...[/]");
-            Character character = CharGen.GenerateNewCharacter(profession, verbose: verbose);
+            Character character = CharGen.GenerateNewCharacter(
+                profession,
+                randomNationality: randomNationality,
+                verbose: verbose
+            );
 
             AnsiConsole.MarkupLine($"[green]Character {character.Name} generated.[/]");
             string output = character.ToString();

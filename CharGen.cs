@@ -93,6 +93,7 @@ public static class CharGen
         Sex? sexOverride = null,
         string? labelOverride = null,
         string? employerOverride = null,
+        bool randomNationality = false,
         bool verbose = false
     )
     {
@@ -106,7 +107,8 @@ public static class CharGen
             minAge,
             maxAge,
             labelOverride,
-            employerOverride
+            employerOverride,
+            randomNationality
         );
         if (verbose)
             Console.WriteLine(demographics);
@@ -120,7 +122,11 @@ public static class CharGen
         DerivedStatistics derivedStats = GenerateDerivedStats(stats);
         if (verbose)
             Console.WriteLine(derivedStats);
-        Dictionary<string, int> skills = GenerateSkills(profession, verbose);
+        Dictionary<string, int> skills = GenerateSkills(
+            profession,
+            demographics.Nationality,
+            verbose
+        );
 
         return new(name, profession, demographics, stats, derivedStats, skills);
     }
@@ -131,7 +137,8 @@ public static class CharGen
         int minAge,
         int maxAge,
         string? labelOverride,
-        string? employerOverride
+        string? employerOverride,
+        bool randomNationality = false
     )
     {
         IDeserializer deserializer = new DeserializerBuilder()
@@ -141,9 +148,13 @@ public static class CharGen
 
         // Load nations from YAML file
         string yamlContent = File.ReadAllText("data/nations.yaml");
-        List<Nation> nations = deserializer.Deserialize<List<Nation>>(yamlContent);
+        Dictionary<string, Nation> nations = deserializer.Deserialize<Dictionary<string, Nation>>(
+            yamlContent
+        );
 
-        Nation nation = Random.Shared.GetItems(nations.ToArray(), 1).First();
+        Nation nation = randomNationality
+            ? Random.Shared.GetItems(nations.Values.ToArray(), 1).First()
+            : nations["usa"];
 
         int age = Random.Shared.Next(minAge, maxAge + 1);
         DateTime birthDay = new(1995, 1, 1);
@@ -244,27 +255,33 @@ public static class CharGen
         return new DerivedStatistics(hp, wp, san, breakingPoint);
     }
 
-    static Dictionary<string, int> GenerateSkills(Profession profession, bool verbose = false)
+    static Dictionary<string, int> GenerateSkills(
+        Profession profession,
+        Nation ownNation,
+        bool verbose = false
+    )
     {
         Dictionary<string, int> skills = [];
 
-        foreach (var skill in DefaultSkills)
+        foreach (KeyValuePair<string, int> skill in DefaultSkills)
         {
-            skills[skill.Key] = skill.Value;
+            string skillName = GetSkillTypes(skill.Key, ownNation);
+            skills[skillName] = skill.Value;
         }
 
         if (verbose)
             Console.WriteLine($"Default Skills: {string.Join(", ", skills)}");
 
-        foreach (var skill in profession.Skills.Always)
+        foreach (KeyValuePair<string, int> skill in profession.Skills.Always)
         {
+            string skillName = GetSkillTypes(skill.Key, ownNation);
             if (skills.TryGetValue(skill.Key, out int value))
             {
-                skills[skill.Key] = Math.Max(value, skill.Value);
+                skills[skillName] = Math.Max(value, skill.Value);
             }
             else
             {
-                skills[skill.Key] = skill.Value;
+                skills[skillName] = skill.Value;
             }
         }
 
@@ -285,15 +302,16 @@ public static class CharGen
                     break;
 
                 string skillName = possibleSkills[i];
+                string newSkillName = GetSkillTypes(skillName, ownNation);
                 if (skills.TryGetValue(skillName, out int value))
                 {
-                    skills[skillName] = Math.Max(value, profession.Skills.Pick[skillName]);
+                    skills[newSkillName] = Math.Max(value, profession.Skills.Pick[skillName]);
                 }
                 else
                 {
-                    skills[skillName] = profession.Skills.Pick[skillName];
+                    skills[newSkillName] = profession.Skills.Pick[skillName];
                 }
-                pickedSkills.Add(skillName);
+                pickedSkills.Add(newSkillName);
             }
         }
 
@@ -334,6 +352,14 @@ public static class CharGen
                 bonusSkill = Random.Shared.GetItems(AllBonusSkills.ToArray(), 1).First();
             }
 
+            if (bonusSkill.Contains('|'))
+            {
+                string[] skillSelections = bonusSkill.Split('|');
+                bonusSkill = Random.Shared.GetItems(skillSelections, 1).First();
+            }
+
+            bonusSkill = GetSkillTypes(bonusSkill, ownNation);
+
             if (
                 skills.TryGetValue(bonusSkill, out int currentValue)
                 && currentValue >= maxSkillLevel
@@ -342,7 +368,7 @@ public static class CharGen
                 continue;
             }
 
-            skills[bonusSkill] = currentValue + boost;
+            skills[bonusSkill] = Math.Min(currentValue + boost, 80);
             pickedBonusSkills.Add(bonusSkill);
         }
 
@@ -350,5 +376,54 @@ public static class CharGen
             Console.WriteLine($"Bonus Skill Pack: {string.Join(", ", pickedBonusSkills)}");
 
         return skills;
+    }
+
+    static string GetSkillTypes(string skillName, Nation ownNation)
+    {
+        if (skillName.Contains("(*)"))
+        {
+            string yamlContent = File.ReadAllText("data/skill_types.yaml");
+            IDeserializer deserializer = new DeserializerBuilder()
+                .IgnoreUnmatchedProperties()
+                .WithNamingConvention(UnderscoredNamingConvention.Instance)
+                .Build();
+
+            Dictionary<string, List<string>> skillTypes = deserializer.Deserialize<
+                Dictionary<string, List<string>>
+            >(yamlContent);
+
+            skillName = skillName[..^4]; // Remove the " (*)" part
+
+            if (skillName == "foreign language")
+            {
+                yamlContent = File.ReadAllText("data/nations.yaml");
+                Dictionary<string, Nation> nations = deserializer.Deserialize<
+                    Dictionary<string, Nation>
+                >(yamlContent);
+
+                Nation[] otherNations = nations
+                    .Values.Where(n => n.NativeLanguage != ownNation.NativeLanguage)
+                    .ToArray();
+                Nation randomNation = Random.Shared.GetItems(otherNations, 1).First();
+
+                return $"{skillName} ({randomNation.NativeLanguage})";
+            }
+
+            if (skillTypes.TryGetValue(skillName, out List<string>? skillTypeSelections))
+            {
+                string skillType = Random.Shared.GetItems(skillTypeSelections.ToArray(), 1).First();
+                return $"{skillName} ({skillType})";
+            }
+            else
+            {
+                throw new KeyNotFoundException(
+                    $"Skill type for '{skillName}' not found in skill_types.yaml"
+                );
+            }
+        }
+        else
+        {
+            return skillName;
+        }
     }
 }

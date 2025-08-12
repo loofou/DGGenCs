@@ -1,7 +1,97 @@
----
-- name: U.S.A.
+
+usa:
+  name: U.S.A.
   nationality: American
   native_language: English
-- name: U.K.
+uk:
+  name: U.K.
   nationality: British
   native_language: English
+china:
+  name: China
+  nationality: Chinese
+  native_language: Mandarin
+russia:
+  name: Russia
+  nationality: Russian
+  native_language: Russian
+india:
+  name: India
+  nationality: Indian
+  native_language: Hindi
+japan:
+  name: Japan
+  nationality: Japanese
+  native_language: Japanese
+germany:
+  name: Germany
+  nationality: German
+  native_language: German
+france:
+  name: France
+  nationality: French
+  native_language: French
+brazil:
+  name: Brazil
+  nationality: Brazilian
+  native_language: Portuguese
+italy:
+  name: Italy
+  nationality: Italian
+  native_language: Italian
+canada:
+  name: Canada
+  nationality: Canadian
+  native_language: English, French
+australia:
+  name: Australia
+  nationality: Australian
+  native_language: English
+south_korea:
+  name: South Korea
+  nationality: South Korean
+  native_language: Korean
+spain:
+  name: Spain
+  nationality: Spanish
+  native_language: Spanish
+turkey:
+  name: Turkey
+  nationality: Turkish
+  native_language: Turkish
+saudi_arabia:
+  name: Saudi Arabia
+  nationality: Saudi
+  native_language: Arabic
+indonesia:
+  name: Indonesia
+  nationality: Indonesian
+  native_language: Indonesian
+south_africa:
+  name: South Africa
+  nationality: South African
+  native_language: Afrikaans
+argentina:
+  name: Argentina
+  nationality: Argentine
+  native_language: Spanish
+mexico:
+  name: Mexico
+  nationality: Mexican
+  native_language: Spanish
+nigeria:
+  name: Nigeria
+  nationality: Nigerian
+  native_language: English
+egypt:
+  name: Egypt
+  nationality: Egyptian
+  native_language: Arabic
+pakistan:
+  name: Pakistan
+  nationality: Pakistani
+  native_language: Urdu
+israel:
+  name: Israel
+  nationality: Israeli
+  native_language: Hebrew

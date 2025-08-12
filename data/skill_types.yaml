@@ -1,0 +1,53 @@
+craft:
+- carpenter
+- cooking
+- electrician
+- microelectronics
+- mechanic
+- locksmith
+- gunsmith
+- architect
+- plumber
+
+art:
+- painting
+- sculpture
+- creative writing
+- photography
+- theater
+- acting
+- dance, 
+- flute
+- forgery
+- guitar
+- psychotherapy
+- scriptwriting
+- singing
+- violin
+
+military science:
+- land
+- air
+- sea
+
+pilot:
+- airplane
+- drone
+- helicopter
+- small boat
+- ship
+- spacecraft
+
+science:
+- astronomy
+- biology
+- botany
+- chemistry
+- engineering
+- genetics
+- geology
+- mathematics
+- meteorology
+- physics
+- planetology
+- zoology

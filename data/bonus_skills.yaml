@@ -1,11 +1,11 @@
 artist: 
 - alertness
-- craft1
+- craft (*)
 - disguise
 - persuade
-- art1
-- art2
-- art3
+- art (*)
+- art (*)
+- art (*)
 - HUMINT
 
 athlete: 
@@ -20,7 +20,7 @@ athlete:
 
 author:
 - anthropology
-- art (writing)
+- art (creative writing)
 - bureaucracy
 - history
 - law
@@ -32,7 +32,7 @@ black_bag_training:
 - alertness
 - athletics
 - craft (electrician)
-- craft (locksmithing)
+- craft (locksmith)
 - criminology
 - disguise
 - search
@@ -40,8 +40,8 @@ black_bag_training:
 
 blue_collar_worker:
 - alertness
-- craft1
-- craft2
+- craft (*)
+- craft (*)
 - drive
 - first aid
 - heavy machinery
@@ -58,9 +58,9 @@ bureaucrat:
 - persuade
 
 clergy:
-- foreign language1
-- foreign language2
-- foreign language3
+- foreign language (*)
+- foreign language (*)
+- foreign language (*)
 - history
 - HUMINT
 - occult
@@ -86,7 +86,7 @@ computer_enthusiast_or_hacker:
 counselor:
 - bureaucracy
 - first aid
-- foreign language1
+- foreign language (*)
 - HUMINT
 - law
 - persuade
@@ -120,13 +120,13 @@ gangster:
 - drive
 - persuade
 - stealth
-- athletics|foreign language1|firearms|HUMINT|melee weapons|pharmacy|unarmed combat
-- athletics|foreign language1|firearms|HUMINT|melee weapons|pharmacy|unarmed combat
+- athletics|foreign language (*)|firearms|HUMINT|melee weapons|pharmacy|unarmed combat
+- athletics|foreign language (*)|firearms|HUMINT|melee weapons|pharmacy|unarmed combat
 
 interrogator:
 - criminology
-- foreign language1
-- foreign language2
+- foreign language (*)
+- foreign language (*)
 - HUMINT
 - law
 - persuade
@@ -136,7 +136,7 @@ interrogator:
 liberal_arts:
 - anthropology|archeology
 - art
-- foreign language
+- foreign language (*)
 - history
 - persuade
 
@@ -144,8 +144,8 @@ military_officer:
 - bureaucracy
 - firearms
 - history
-- military science1
-- artillery|heavy machinery|heavy weapons|HUMINT|pilot1|SIGINT
+- military science (*)
+- artillery|heavy machinery|heavy weapons|HUMINT|pilot (*)|SIGINT
 
 mba:
 - accounting
