@@ -22,5 +22,16 @@ cid:
       foreign language (*): 50
       heavy weapons: 50
       pharmacy: 50
+  npc:
+    important_stats:
+      - con
+      - int
+    important_skills:
+      - alertness
+      - criminology
+      - firearms
+      - HUMINT
+      - persuade
+      - unarmed combat
   bonds: 3
   equipment-kit: agent

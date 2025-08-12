@@ -1,6 +1,5 @@
 ﻿using System.CommandLine;
 using Spectre.Console;
-using Spectre.Console.Cli.Help;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -11,6 +10,14 @@ public class Program
         AnsiConsole.MarkupLine("[teal bold]Delta Green Character Generator[/]");
 
         RootCommand rootCommand = new("Delta Green Character Generator");
+
+        Option<CharacterType> typeOption = new("--type", "-t")
+        {
+            Description = "Type of character to generate (agent or npc)",
+            DefaultValueFactory = _ => CharacterType.Agent,
+            Arity = ArgumentArity.ZeroOrOne,
+        };
+        rootCommand.Options.Add(typeOption);
 
         Option<string> professionOption = new("--profession", "-p")
         {
@@ -43,6 +50,31 @@ public class Program
         };
         rootCommand.Options.Add(randomNationalityOption);
 
+        Option<int[]> ageOption = new("--age", "-a")
+        {
+            Description =
+                "Age range for the character (min,max) or single number for constant age.",
+            DefaultValueFactory = _ => [25, 55],
+            Arity = ArgumentArity.ZeroOrMore,
+            AllowMultipleArgumentsPerToken = true,
+        };
+        ageOption.Validators.Add(result =>
+        {
+            int[] ages = result.GetValue(ageOption) ?? [];
+            if (ages.Length == 1)
+            {
+                // If only one age is provided, treat it as a constant age
+                ages = [ages[0], ages[0]];
+            }
+            if (ages.Length != 2 || ages[0] < 0 || ages[1] < 0 || ages[0] > ages[1])
+            {
+                result.AddError(
+                    "The age must be specified as one or two positive integers in the format min,max."
+                );
+            }
+        });
+        rootCommand.Options.Add(ageOption);
+
         Option<bool> verboseOption = new("--verbose", "-v")
         {
             Description = "Enable verbose output",
@@ -55,12 +87,18 @@ public class Program
             (parseResult) =>
             {
                 int count = parseResult.GetValue(countOption);
+                CharacterType type = parseResult.GetValue(typeOption);
                 string professionName = parseResult.GetValue(professionOption) ?? "cid"; //TODO: Randomize
                 bool randomNationality = parseResult.GetValue(randomNationalityOption);
+                int[] ageRange = parseResult.GetValue(ageOption) ?? [25, 55];
+                if (ageRange.Length == 1)
+                {
+                    ageRange = [ageRange[0], ageRange[0]];
+                }
 
                 bool verbose = parseResult.GetValue(verboseOption);
 
-                Generate(count, professionName, randomNationality, verbose);
+                Generate(type, count, professionName, ageRange, randomNationality, verbose);
             }
         );
 
@@ -72,8 +110,10 @@ public class Program
     }
 
     private static void Generate(
+        CharacterType type,
         int count,
         string professionName,
+        int[] ageRange,
         bool randomNationality,
         bool verbose
     )
@@ -83,8 +123,17 @@ public class Program
             Profession profession = GetProfession(professionName);
 
             AnsiConsole.MarkupLine($"[blue]Generating character {i + 1} of {count}...[/]");
+
+            if (verbose)
+            {
+                Console.WriteLine($"Profession: {profession}");
+            }
+
             Character character = CharGen.GenerateNewCharacter(
+                type,
                 profession,
+                ageRange[0],
+                ageRange[1],
                 randomNationality: randomNationality,
                 verbose: verbose
             );

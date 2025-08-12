@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,17 +10,36 @@ public enum Sex
     NonBinary,
 }
 
+public enum CharacterType
+{
+    Agent,
+    NPC,
+}
+
+public enum NPCType
+{
+    Child,
+    Youth,
+    Novice,
+    Ordinary,
+    Expert,
+}
+
 public record struct ProfessionSkillPack(
     Dictionary<string, int> Always,
     Dictionary<string, int> Pick,
     int PickAmount = 0
 );
 
+public record struct ProfessionNPCConfig(List<string> ImportantStats, List<String> ImportantSkills);
+
 public record struct Profession(
     string Label,
     string Employer,
     string Division,
-    ProfessionSkillPack Skills
+    ProfessionSkillPack Skills,
+    int Bonds,
+    ProfessionNPCConfig Npc
 );
 
 public record struct Nation(string Name, string Nationality, string NativeLanguage);
@@ -58,7 +78,8 @@ public partial record Character(
     Demographics Demographics,
     Statistics Stats,
     DerivedStatistics DerivedStats,
-    Dictionary<string, int> Skills
+    Dictionary<string, int> Skills,
+    List<string> Bonds
 )
 {
     [GeneratedRegex(@"(\r?\n){3,}")]
@@ -83,10 +104,10 @@ public partial record Character(
             { @"{derived_statistics}", DerivedStats.ToString() },
             {
                 @"{skills}",
-                $"SKILLS: {string.Join(", ", Skills.Select(s => $"{ti.ToTitleCase(s.Key)} {s.Value}%"))}"
+                $"SKILLS: {string.Join(", ", Skills.Select(s => $"{ti.ToTitleCase(s.Key)} {s.Value}%").Order())}"
             },
             { @"{special_training}", "" },
-            { @"{bonds}", "" },
+            { @"{bonds}", $"BONDS: {string.Join(", ", Bonds)}" },
             { @"{motivations_disorders}", "" },
             { @"{armor}", "" },
             { @"{attacks}", "" },

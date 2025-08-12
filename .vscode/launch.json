@@ -5,7 +5,7 @@
   "version": "0.5.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (console)",
+      "name": "10 Agents",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
@@ -14,7 +14,17 @@
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "console": "integratedTerminal"
+    },
+    {
+      "name": "10 NPCs",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net9.0/DGGenCs.dll",
+      "args": ["-v","-c","10", "-t","npc", "-a", "20"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal"
     }
-
   ]
 }
