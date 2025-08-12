@@ -77,7 +77,7 @@ public class Program
 
         Option<bool> verboseOption = new("--verbose", "-v")
         {
-            Description = "Enable verbose output",
+            Description = "Enable verbose output for debug purposes.",
             DefaultValueFactory = _ => false,
             Arity = ArgumentArity.ZeroOrOne,
         };
