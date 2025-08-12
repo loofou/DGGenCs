@@ -1,0 +1,48 @@
+parachuting:
+  name: Parachuting
+  link: athletics
+skiing:
+  name: Skiing
+  link: athletics
+
+scuba:
+  name: SCUBA gear
+  link: swim
+space_suit:
+  name: Space suit operation
+  link: INT
+
+exotic_melee:
+  name: Exotic Melee Weapon
+  link: melee weapons
+exotic_firearm:
+  name: Exotic Firearm
+  link: firearms
+hand_grenades:
+  name: Hand Grenades
+  link: athletics
+
+deep_subculture:
+  name: Deep Knowledge of a Subculture
+  link: INT
+another_country_criminal_codes:
+  name: Another Country's Criminal Codes
+  link: law
+
+lockpicks:
+  name: Lockpicks
+  link: DEX
+electronic_security:
+  name: Electronic Security Systems
+  link: INT
+
+inside_conspiracy:
+  name: Inside Knowledge of a Conspiracy
+  link: criminology
+fluency_rare_dialect:
+  name: Fluency in a Rare Dialect
+  link: foreign language
+
+black_markets:
+  name: Black Markets
+  link: criminology

@@ -33,5 +33,11 @@ cid:
       - HUMINT
       - persuade
       - unarmed combat
+  special_training:
+    chance: 30
+    trainings:
+      - exotic_melee
+      - exotic_firearm
+      - hand_grenades
   bonds: 3
   equipment-kit: agent

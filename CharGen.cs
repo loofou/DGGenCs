@@ -131,8 +131,18 @@ public static class CharGen
             verbose
         );
         List<string> bonds = GenerateBonds(profession, verbose);
+        List<string> specialTraining = GenerateSpecialTraining(profession, verbose);
 
-        return new(name, profession, demographics, stats, derivedStats, skills, bonds);
+        return new(
+            name,
+            profession,
+            demographics,
+            stats,
+            derivedStats,
+            skills,
+            bonds,
+            specialTraining
+        );
     }
 
     static Demographics GenerateDemographics(
@@ -558,6 +568,52 @@ public static class CharGen
             Console.WriteLine($"Bonds: {string.Join(", ", bonds)}");
 
         return bonds;
+    }
+
+    static List<string> GenerateSpecialTraining(Profession profession, bool verbose = false)
+    {
+        string yamlContent = File.ReadAllText("data/special_training.yaml");
+        IDeserializer deserializer = new DeserializerBuilder()
+            .IgnoreUnmatchedProperties()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+        Dictionary<string, Dictionary<string, string>> specialTrainingList =
+            deserializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(yamlContent);
+
+        List<string> specialTrainings = [];
+        if (profession.SpecialTraining.chance > 0)
+        {
+            foreach (string training in profession.SpecialTraining.trainings)
+            {
+                if (Random.Shared.Next(0, 100) < profession.SpecialTraining.chance)
+                {
+                    if (
+                        specialTrainingList.TryGetValue(
+                            training,
+                            out Dictionary<string, string>? trainingDetails
+                        )
+                    )
+                    {
+                        // Format the training details
+                        string formattedTraining =
+                            $"{trainingDetails["name"]} ({trainingDetails["link"]})";
+                        specialTrainings.Add(formattedTraining);
+                    }
+                    else
+                    {
+                        throw new KeyNotFoundException(
+                            $"Special training '{training}' not found in special_training.yaml"
+                        );
+                    }
+                }
+            }
+        }
+
+        if (verbose)
+            Console.WriteLine($"Special Training: {string.Join(", ", specialTrainings)}");
+
+        return specialTrainings;
     }
 
     static NPCType AgeToNPCType(int age)

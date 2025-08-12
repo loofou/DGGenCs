@@ -31,7 +31,9 @@ public record struct ProfessionSkillPack(
     int PickAmount = 0
 );
 
-public record struct ProfessionNPCConfig(List<string> ImportantStats, List<String> ImportantSkills);
+public record struct ProfessionNPCConfig(List<string> ImportantStats, List<string> ImportantSkills);
+
+public record struct ProfessionSpecialTraining(int chance, List<string> trainings);
 
 public record struct Profession(
     string Label,
@@ -39,7 +41,8 @@ public record struct Profession(
     string Division,
     ProfessionSkillPack Skills,
     int Bonds,
-    ProfessionNPCConfig Npc
+    ProfessionNPCConfig Npc,
+    ProfessionSpecialTraining SpecialTraining
 );
 
 public record struct Nation(string Name, string Nationality, string NativeLanguage);
@@ -62,7 +65,7 @@ public record struct Statistics(
     int Charisma
 )
 {
-    public override string ToString() =>
+    public override readonly string ToString() =>
         $"STR {Strength} CON {Constitution} DEX {Dexterity} INT {Intelligence} POW {Power} CHA {Charisma}";
 };
 
@@ -79,7 +82,8 @@ public partial record Character(
     Statistics Stats,
     DerivedStatistics DerivedStats,
     Dictionary<string, int> Skills,
-    List<string> Bonds
+    List<string> Bonds,
+    List<string> SpecialTraining
 )
 {
     [GeneratedRegex(@"(\r?\n){3,}")]
@@ -106,7 +110,10 @@ public partial record Character(
                 @"{skills}",
                 $"SKILLS: {string.Join(", ", Skills.Select(s => $"{ti.ToTitleCase(s.Key)} {s.Value}%").Order())}"
             },
-            { @"{special_training}", "" },
+            {
+                @"{special_training}",
+                $"SPECIAL TRAINING: {string.Join(", ", SpecialTraining.Select(s => ti.ToTitleCase(s)))}"
+            },
             { @"{bonds}", $"BONDS: {string.Join(", ", Bonds)}" },
             { @"{motivations_disorders}", "" },
             { @"{armor}", "" },
