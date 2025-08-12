@@ -1,0 +1,133 @@
+name: Publish and Attach Artifact
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set version in csproj
+        run: |
+          $version = $env:GITHUB_REF_NAME -replace '^v', ''
+          [xml]$csproj = Get-Content ./DGGenCs.csproj
+          if ($csproj.Project.PropertyGroup.Version) {
+            $csproj.Project.PropertyGroup.Version = $version
+          } else {
+            $versionNode = $csproj.CreateElement('Version')
+            $versionNode.InnerText = $version
+            $csproj.Project.PropertyGroup.AppendChild($versionNode) | Out-Null
+          }
+          $csproj.Save('./DGGenCs.csproj')
+        shell: pwsh
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish -c Release -o publish
+
+      - name: Zip published output
+        run: Compress-Archive -Path publish/* -DestinationPath DGGenCs-windows.zip
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: DGGenCs-windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install xmlstarlet
+        run: sudo apt-get update && sudo apt-get install -y xmlstarlet
+        shell: bash
+      - name: Set version in csproj
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          xmlstarlet ed -L -u "/Project/PropertyGroup/Version" -v "$version" DGGenCs.csproj || \
+          xmlstarlet ed -L -s "/Project/PropertyGroup" -t elem -n Version -v "$version" DGGenCs.csproj
+        shell: bash
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish -c Release -o publish
+
+      - name: Zip published output
+        run: zip -r DGGenCs-linux.zip publish
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: DGGenCs-linux.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install xmlstarlet
+        run: brew install xmlstarlet
+        shell: bash
+      - name: Set version in csproj
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          xmlstarlet ed -L -u "/Project/PropertyGroup/Version" -v "$version" DGGenCs.csproj || \
+          xmlstarlet ed -L -s "/Project/PropertyGroup" -t elem -n Version -v "$version" DGGenCs.csproj
+        shell: bash
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish -c Release -o publish
+
+      - name: Zip published output
+        run: zip -r DGGenCs-macos.zip publish
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: DGGenCs-macos.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
