@@ -23,7 +23,7 @@ Download the latest release from github or build the tool yourself. Then you can
 
 | Argument                | Short | Description                                                                  | Default |
 |-------------------------|-------|------------------------------------------------------------------------------|---------|
-| --type <agent|npc>      | -t    | Type of character to generate (agent or npc)                                 | agent   |
+| --type <agent\|npc>      | -t    | Type of character to generate (agent or npc). NPCs use the simpler stat creation method from the Handlers Guide p. 354. Agents on the other hand use the full stat creation system from the Agents Handbook. Age is taken into account only for NPCs!                                 | agent   |
 | --profession <name>     | -p    | Profession of the character to generate                                      | cid     |
 | --count <number>        | -c    | Number of characters to generate                                             | 1       |
 | --random-nationality    | -r    | Generate characters with random nationalities (otherwise uses the USA)       | false   |

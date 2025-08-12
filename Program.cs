@@ -13,7 +13,8 @@ public class Program
 
         Option<CharacterType> typeOption = new("--type", "-t")
         {
-            Description = "Type of character to generate (agent or npc)",
+            Description =
+                "Type of character to generate (agent or npc). NPCs use the simpler stat creation method from the Handlers Guide p. 354. Agents on the other hand use the full stat creation system from the Agents Handbook. Age is taken into account only for NPCs!",
             DefaultValueFactory = _ => CharacterType.Agent,
             Arity = ArgumentArity.ZeroOrOne,
         };
@@ -21,7 +22,7 @@ public class Program
 
         Option<string> professionOption = new("--profession", "-p")
         {
-            Description = "Profession of the character to generate",
+            Description = "Profession of the character to generate.",
             DefaultValueFactory = _ => "cid",
             Arity = ArgumentArity.ZeroOrOne,
         };
@@ -29,7 +30,7 @@ public class Program
 
         Option<int> countOption = new("--count", "-c")
         {
-            Description = "Number of characters to generate",
+            Description = "Number of characters to generate.",
             DefaultValueFactory = _ => 1,
             Arity = ArgumentArity.ZeroOrOne,
         };
