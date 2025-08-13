@@ -44,7 +44,6 @@ cid:
 
 anthropologist:
   label: Anthropologist
-  employer: <University>
   skills:
     always:
       anthropology: 50
@@ -79,3 +78,7 @@ anthropologist:
       - fluency_rare_dialect
       - deep_subculture
   gear_kit: civilian
+
+#engineer:
+#  label: Engineer / Computer Scientist
+  

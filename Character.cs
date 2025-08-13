@@ -186,7 +186,7 @@ public partial record Character(
             },
             {
                 @"{notes}",
-                $"EMPLOYER: {Demographics.Employer}, NATIONALITY: {Demographics.Nationality.Nationality} ({Demographics.Nationality.Name})"
+                $"{(Demographics.Employer != "" ? $"EMPLOYER: {Demographics.Employer}, " : string.Empty)}NATIONALITY: {Demographics.Nationality.Nationality} ({Demographics.Nationality.Name})"
             },
         };
 
