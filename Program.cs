@@ -201,6 +201,24 @@ public class Program
             profession = Random.Shared.GetItems(professions.Values.ToArray(), 1).First();
         }
 
+        if (profession.Override is not null)
+        {
+            if (professions.TryGetValue(profession.Override, out Profession overriddenProfession))
+            {
+                profession = overriddenProfession with
+                {
+                    Employer = profession.Employer,
+                    Division = profession.Division,
+                };
+            }
+            else
+            {
+                throw new KeyNotFoundException(
+                    $"Profession override '{profession.Override}' not found in professions.yaml"
+                );
+            }
+        }
+
         return profession;
     }
 }

@@ -29,7 +29,7 @@ civilian:
   weapons:
   - item: unarmed
   - item: light_pistol
-    chance: 25
+    chance: 30
   other:
   - item: smartphone
   - item: laptop

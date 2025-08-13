@@ -618,11 +618,11 @@ public static class CharGen
             deserializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(yamlContent);
 
         List<string> specialTrainings = [];
-        if (profession.SpecialTraining.chance > 0)
+        if (profession.SpecialTraining.Chance > 0)
         {
-            foreach (string training in profession.SpecialTraining.trainings)
+            foreach (string training in profession.SpecialTraining.Trainings)
             {
-                if (Random.Shared.Next(0, 100) < profession.SpecialTraining.chance)
+                if (Random.Shared.Next(0, 100) < profession.SpecialTraining.Chance)
                 {
                     if (
                         specialTrainingList.TryGetValue(

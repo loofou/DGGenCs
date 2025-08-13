@@ -32,9 +32,10 @@ public record struct ProfessionSkillPack(
 
 public record struct ProfessionNPCConfig(List<string> ImportantStats, List<string> ImportantSkills);
 
-public record struct ProfessionSpecialTraining(int chance, List<string> trainings);
+public record struct ProfessionSpecialTraining(int Chance, List<string> Trainings);
 
 public record struct Profession(
+    string? Override,
     string Label,
     string Employer,
     string Division,

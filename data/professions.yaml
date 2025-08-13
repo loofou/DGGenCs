@@ -1,7 +1,76 @@
-cid:
+anthropologist:
+  label: Anthropologist
+  skills:
+    always:
+      anthropology: 50
+      bureaucracy: 40
+      foreign language (*): 50
+      foreign language (*2): 40
+      history: 60
+      occult: 40
+      persuade: 40
+    pick_amount: 2
+    pick:
+      archeology: 40
+      HUMINT: 50
+      navigate: 50
+      ride: 50
+      search: 60
+      survival: 50
+  bonds: 4
+  npc:
+    important_stats:
+      - int
+    important_skills:
+      - anthropology
+      - archeology
+      - foreign language (*)
+      - occult
+      - history
+      - search
+  special_training:
+    chance: 40
+    trainings:
+      - fluency_rare_dialect
+      - deep_subculture
+  gear_kit: civilian
+
+engineer:
+  label: Engineer / Computer Scientist
+  skills:
+    always:
+      computer science: 60
+      craft (electrician): 30
+      craft (mechanic): 30
+      craft (microelectronics): 40
+      science (mathematics): 40
+      SIGINT: 40
+    pick-amount: 4
+    pick:
+      accounting: 50
+      bureaucracy: 50
+      craft (*): 40
+      foreign language (*): 40
+      heavy machinery: 50
+      law: 40
+      science (*): 40
+  bonds: 3
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - computer science
+    - craft (electrician)
+    - craft (microelectronics)
+    - SIGINT
+  special_training:
+    chance: 30
+    trainings:
+      - electronic_security
+  gear_kit: civilian
+
+federal_agent:
   label: Federal Agent
-  employer: FBI
-  division: CID
   skills:
     always:
       alertness: 50
@@ -42,43 +111,9 @@ cid:
   bonds: 3
   gear_kit: agent
 
-anthropologist:
-  label: Anthropologist
-  skills:
-    always:
-      anthropology: 50
-      bureaucracy: 40
-      foreign language (*): 50
-      foreign language (*2): 40
-      history: 60
-      occult: 40
-      persuade: 40
-    pick_amount: 2
-    pick:
-      archeology: 40
-      HUMINT: 50
-      navigate: 50
-      ride: 50
-      search: 60
-      survival: 50
-  bonds: 4
-  npc:
-    important_stats:
-      - int
-    important_skills:
-      - anthropology
-      - archeology
-      - foreign language (*)
-      - occult
-      - history
-      - search
-  special_training:
-    chance: 40
-    trainings:
-      - fluency_rare_dialect
-      - deep_subculture
-  gear_kit: civilian
-
-#engineer:
-#  label: Engineer / Computer Scientist
+# FBI divisions
+cid:
+  override: federal_agent
+  employer: FBI
+  division: CID
   
