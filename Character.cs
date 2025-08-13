@@ -45,6 +45,8 @@ public record struct Profession(
     string GearKit
 );
 
+public record struct Motivation(int chances, List<string> motivation, List<string> objects);
+
 public record struct Nation(string Name, string Nationality, string NativeLanguage);
 
 public record struct Demographics(
@@ -119,7 +121,8 @@ public partial record Character(
     List<string> SpecialTraining,
     List<Weapon> Attacks,
     List<Armor> Armor,
-    List<string> Equipment
+    List<string> Equipment,
+    List<string> MotivationsDisorders
 )
 {
     [GeneratedRegex(@"(\r?\n){3,}")]
@@ -162,8 +165,11 @@ public partial record Character(
                     ? $"SPECIAL TRAINING: {string.Join(", ", SpecialTraining.Select(s => ti.ToTitleCase(s)))}"
                     : ""
             },
-            { @"{bonds}", $"BONDS: {string.Join(", ", Bonds)}" },
-            { @"{motivations_disorders}", string.Empty },
+            { @"{bonds}", $"BONDS: {string.Join("\n", Bonds)}" },
+            {
+                @"{motivations_disorders}",
+                $"MOTIVATIONS AND DISORDERS: {string.Join("\n", MotivationsDisorders)}"
+            },
             {
                 @"{armor}",
                 Armor.Count > 0

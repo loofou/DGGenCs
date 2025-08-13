@@ -1,0 +1,115 @@
+achievement:
+  chances: 1
+  motivation:
+  - Exploiting the Unnatural
+  - Recognition for achievements
+  - Showing others how it's done
+  - Correcting past mistakes
+  - Success despite obstacles
+  - Proving my worth
+  - Getting the job done
+  - Living up to expectations
+  - Doing a job no one else can do
+  - Constant improvement
+
+understanding:
+  chances: 2
+  motivation:
+  - Conspiracy theorizing
+  - Making sense of a past tragedy
+  - The thrill of discovery
+  - Exploration
+  - Solving a particular mystery
+  - Understanding the Unnatural
+  - Learning a group's secrets
+  - Expanding human knowledge
+  - Solving hard problems
+  - Solving hard problems
+
+principle:
+  chances: 2
+  motivation:
+  - Survival at all costs
+  - Professionalism
+  - Doing what's right
+  - Doing what's right
+  - Following the law
+  - Healing
+  - Faith
+  - Patriotism
+  - Personal integrity
+  - Atonement
+
+protection:
+  chances: 2
+  motivation:
+  - Protect a Bond from
+  - Protect a Bond from
+  - Protect my family from
+  - Protect my family from
+  - Protect my friends/colleagues from
+  - Protect an organization from
+  - Protect a community from
+  - Protect my country from
+  - Protect humanity from
+  - Protect innocents from
+  objects:
+  - the Unnatural
+  - the Unnatural
+  - unwelcome truths
+  - a dangerous enemy or rival
+  - failure
+  - harm
+  - the future
+  - corruption
+
+relationships:
+  chances: 2
+  motivation:
+  - Figuring out what people want to hear
+  - Telling lies from the truth
+  - Communication
+  - Diplomacy
+  - Family obligations
+  - Knowing what makes people tick
+  - We can fix this
+  - Never letting a particular Bond down
+  - New romance
+  - Recruiting new Agents and Friendlies
+
+opposition:
+  chances: 2
+  motivation:
+  - Investigating
+  - Investigating
+  - Investigating
+  - Revenge against
+  - Revenge against
+  - Revenge against
+  - Staying one step ahead of
+  - Staying one step ahead of
+  - Stopping
+  - Stopping
+  objects:
+  - the Unnatural
+  - the Unnatural
+  - the Unnatural
+  - the Unnatural
+  - an individual
+  - an individual
+  - an organization
+  - an organization
+
+solace:
+  chances: 1
+  motivation:
+  - A beloved pet
+  - Favorite academic pursuit
+  - Favorite art form
+  - Favorite bad habit
+  - Favorite hobby
+  - Finding true meaning
+  - Home
+  - Sports
+  - Intimacy
+  - Anything for a sense of control

@@ -137,6 +137,8 @@ public static class CharGen
         List<Armor> armor = GenerateArmor(profession, verbose);
         List<string> equipment = GenerateEquipment(profession, verbose);
 
+        List<string> motivations = GenerateMotivations(verbose);
+
         return new(
             name,
             profession,
@@ -148,7 +150,8 @@ public static class CharGen
             specialTraining,
             attacks,
             armor,
-            equipment
+            equipment,
+            motivations
         );
     }
 
@@ -802,6 +805,54 @@ public static class CharGen
             Console.WriteLine($"Equipment: {string.Join(", ", equipment)}");
 
         return equipment;
+    }
+
+    static List<string> GenerateMotivations(bool verbose = false)
+    {
+        string yamlContent = File.ReadAllText("data/motivations.yaml");
+        IDeserializer deserializer = new DeserializerBuilder()
+            .IgnoreUnmatchedProperties()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+        Dictionary<string, Motivation> motivationMap = deserializer.Deserialize<
+            Dictionary<string, Motivation>
+        >(yamlContent);
+
+        List<Motivation> motivationRandomList = [];
+        foreach (var pair in motivationMap)
+        {
+            for (int i = 0; i < pair.Value.chances; i++)
+            {
+                motivationRandomList.Add(pair.Value);
+            }
+        }
+
+        List<string> motivations = [];
+        int motivationAmount = Random.Shared.Next(1, 4); // 1 - 3
+        for (int i = 0; i < motivationAmount; i++)
+        {
+            Motivation motivationObj = Random
+                .Shared.GetItems(motivationRandomList.ToArray(), 1)
+                .First();
+
+            string motivation = Random
+                .Shared.GetItems(motivationObj.motivation.ToArray(), 1)
+                .First();
+
+            if (motivationObj.objects is not null)
+            {
+                motivation +=
+                    " " + Random.Shared.GetItems(motivationObj.objects.ToArray(), 1).First();
+            }
+
+            motivations.Add(motivation);
+        }
+
+        if (verbose)
+            Console.WriteLine($"Motivations: {string.Join(", ", motivations)}");
+
+        return motivations;
     }
 
     static NPCType AgeToNPCType(int age)
