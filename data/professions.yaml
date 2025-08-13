@@ -45,7 +45,7 @@ engineer:
       craft (microelectronics): 40
       science (mathematics): 40
       SIGINT: 40
-    pick-amount: 4
+    pick_amount: 4
     pick:
       accounting: 50
       bureaucracy: 50
@@ -91,6 +91,7 @@ federal_agent:
       foreign language (*): 50
       heavy weapons: 50
       pharmacy: 50
+  bonds: 3
   npc:
     important_stats:
       - con
@@ -108,10 +109,118 @@ federal_agent:
       - exotic_melee
       - exotic_firearm
       - hand_grenades
-  bonds: 3
   gear_kit: agent
 
-# FBI divisions
+physician:
+  label: Physician
+  skills:
+    always:
+      bureaucracy: 50
+      first aid: 60
+      medicine: 60
+      persuade: 40
+      pharmacy: 50
+      science (biology): 60
+      search: 40
+    pick_amount: 2
+    pick:
+      forensics: 50
+      psychotherapy: 60
+      science (*): 50
+      surgery: 50
+  bonds: 3
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - first aid
+    - forensics
+    - medicine
+    - pharmacy
+    - science (biology)
+    - surgery
+  special_training:
+    chance: 10
+    trainings:
+    - deep_subculture
+  gear_kit: medicine
+
+scientist:
+  label: Scientist
+  skills:
+    always:
+      bureaucracy: 40
+      computer science: 40
+      science (*): 60
+      science (*2): 50
+      science (*3): 50
+    pick_amount: 3
+    pick:
+      accounting: 50
+      craft (*): 40
+      foreign language (*): 40
+      forensics: 40
+      law: 40
+      pharmacy: 40
+  bonds: 4
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - bureaucracy
+    - science (*)
+    - science (*)
+    - science (*)
+  special_training:
+    chance: 10
+    trainings:
+    - inside_conspiracy
+  gear_kit: techy
+
+special_operator:
+  label: Special Operator
+  skills:
+    always:
+      alertness: 60
+      athletics: 60
+      demolitions: 40
+      firearms: 60
+      heavy weapons: 50
+      melee weapons: 50
+      military science (land): 60
+      navigate: 50
+      stealth: 50
+      survival: 50
+      swim: 50
+      unarmed combat: 60
+  bonds: 2
+  npc:
+    important_stats:
+      - str
+      - con
+    important_skills:
+      - alertness
+      - athletics
+      - firearms
+      - heavy weapons
+      - melee weapons
+      - military science (land)
+      - swim
+      - unarmed combat
+  special_training:
+    chance: 60
+    trainings:
+      - exotic_melee
+      - exotic_firearm
+      - hand_grenades
+      - scuba
+      - parachuting
+      - lockpicks
+  gear_kit: specops
+
+# OVERRIDES
+
+# FBI overrides
 cid:
   override: federal_agent
   employer: FBI

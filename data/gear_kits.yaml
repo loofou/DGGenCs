@@ -20,6 +20,32 @@ agent:
   - item: handcuffs
   - item: flashlight
   - item: smartphone
+  - item: earpiece
+  - item: walkie_talkie
+    chance: 50
+  - item: first_aid_kit
+    chance: 50
+
+specops:
+  weapons:
+  - item: unarmed
+  - item: carbine
+  - item: medium_pistol
+  armor:
+  - item: kevlar_vest
+  - item: tactical_vest
+    chance: 33
+  - item: kevlar_helmet
+    chance: 33
+  other:
+  - item: badge
+  - item: id_card
+  - item: flashlight
+  - item: smartphone
+  - item: earpiece
+  - item: flexible_cuffs
+  - item: handheld_gps
+    chance: 65
   - item: walkie_talkie
     chance: 50
   - item: first_aid_kit
@@ -33,4 +59,27 @@ civilian:
   other:
   - item: smartphone
   - item: laptop
+    chance: 30
   - item: flashlight
+
+techy:
+  weapons:
+  - item: unarmed
+  - item: light_pistol
+    chance: 25
+  other:
+  - item: smartphone
+  - item: laptop
+  - item: flashlight
+
+medicine:
+  weapons:
+  - item: unarmed
+  - item: light_pistol
+    chance: 20
+  other:
+  - item: smartphone
+  - item: laptop
+    chance: 30
+  - item: flashlight
+  - item: first_aid_kit

@@ -191,3 +191,73 @@ photographer:
 - persuade
 - search
 - stealth
+
+pilot:
+- alertness
+- craft (mechanic)
+- first aid
+- foreign language (*)
+- navigate
+- pilot (*)
+- survival
+- swim
+
+police_officer:
+- alertness
+- criminology
+- drive
+- firearms
+- HUMINT
+- law
+- melee weapons
+- unarmed combat
+
+science_student:
+- bureaucracy
+- computer science
+- craft (*)
+- foreign language (*)
+- science (*)
+- science (*)
+- science (*)
+- accounting|forensics|law|pharmacy
+
+social_worker:
+- bureaucracy
+- criminology
+- forensics
+- foreign language (*)
+- HUMINT
+- law
+- persuade
+- search
+
+soldier:
+- alertness
+- artillery
+- athletics
+- drive
+- firearms
+- heavy weapons
+- military science (land)
+- unarmed combat
+
+translator:
+- anthropology
+- foreign language (*)
+- foreign language (*)
+- foreign language (*)
+- history
+- HUMINT
+- persuade
+- law
+
+urban_explorer:
+- alertness
+- athletics
+- craft (*)
+- law
+- navigate
+- persuade
+- search
+- stealth
