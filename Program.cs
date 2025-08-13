@@ -178,7 +178,7 @@ public class Program
         }
     }
 
-    private static Profession GetProfession(string professionName = null)
+    private static Profession GetProfession(string? professionName)
     {
         IDeserializer deserializer = new DeserializerBuilder()
             .IgnoreUnmatchedProperties()
