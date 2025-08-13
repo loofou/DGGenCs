@@ -76,7 +76,24 @@ public class Program
         });
         rootCommand.Options.Add(ageOption);
 
-        Option<bool> verboseOption = new("--verbose", "-v")
+        Option<bool> veteranOption = new("--veteran", "-v")
+        {
+            Description = "Generate characters with a few random skill increases already.",
+            DefaultValueFactory = _ => false,
+            Arity = ArgumentArity.ZeroOrOne,
+        };
+        rootCommand.Options.Add(veteranOption);
+
+        Option<bool> damagedOption = new("--damaged", "-d")
+        {
+            Description =
+                "Generate characters with exposure to the Unnatural, leaving them damaged.",
+            DefaultValueFactory = _ => false,
+            Arity = ArgumentArity.ZeroOrOne,
+        };
+        rootCommand.Options.Add(damagedOption);
+
+        Option<bool> verboseOption = new("--verbose")
         {
             Description = "Enable verbose output for debug purposes.",
             DefaultValueFactory = _ => false,
@@ -97,9 +114,21 @@ public class Program
                     ageRange = [ageRange[0], ageRange[0]];
                 }
 
+                bool veteran = parseResult.GetValue(veteranOption);
+                bool damaged = parseResult.GetValue(damagedOption);
+
                 bool verbose = parseResult.GetValue(verboseOption);
 
-                Generate(type, count, professionName, ageRange, randomNationality, verbose);
+                Generate(
+                    type,
+                    count,
+                    professionName,
+                    ageRange,
+                    randomNationality,
+                    veteran,
+                    damaged,
+                    verbose
+                );
             }
         );
 
@@ -116,6 +145,8 @@ public class Program
         string professionName,
         int[] ageRange,
         bool randomNationality,
+        bool veteran,
+        bool damaged,
         bool verbose
     )
     {
@@ -135,6 +166,8 @@ public class Program
                 profession,
                 ageRange[0],
                 ageRange[1],
+                veteran: veteran,
+                damaged: damaged,
                 randomNationality: randomNationality,
                 verbose: verbose
             );

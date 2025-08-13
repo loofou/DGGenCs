@@ -10,7 +10,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net9.0/DGGenCs.dll",
-      "args": ["-v","-c","10"],
+      "args": ["--verbose","-c","10","-v", "-d"],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "console": "integratedTerminal"
@@ -21,7 +21,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net9.0/DGGenCs.dll",
-      "args": ["-v","-c","10", "-t","npc", "-a", "20"],
+      "args": ["--verbose","-c","10", "-t","npc", "-a", "20"],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "console": "integratedTerminal"

@@ -38,6 +38,7 @@ public static class CharGen
         { "survival", 10 },
         { "swim", 20 },
         { "unarmed combat", 40 },
+        { "unnatural", 0 },
     };
 
     static readonly List<string> AllBonusSkills =
@@ -95,6 +96,8 @@ public static class CharGen
         string? labelOverride = null,
         string? employerOverride = null,
         bool randomNationality = false,
+        bool veteran = false,
+        bool damaged = false,
         bool verbose = false
     )
     {
@@ -138,6 +141,26 @@ public static class CharGen
         List<string> equipment = GenerateEquipment(profession, verbose);
 
         List<string> motivations = GenerateMotivations(verbose);
+
+        //veterancy
+        if (veteran)
+        {
+            GenerateVeterancy(ref skills, verbose: verbose);
+        }
+
+        //damage
+        if (damaged)
+        {
+            GenerateDamage(
+                ref stats,
+                ref derivedStats,
+                ref skills,
+                ref bonds,
+                out List<string> disorders,
+                verbose
+            );
+            motivations.AddRange(disorders);
+        }
 
         return new(
             name,
@@ -853,6 +876,110 @@ public static class CharGen
             Console.WriteLine($"Motivations: {string.Join(", ", motivations)}");
 
         return motivations;
+    }
+
+    static void GenerateVeterancy(
+        ref Dictionary<string, int> skills,
+        int numberOfSkills = 10,
+        int min = 1,
+        int max = 4,
+        int maxSkill = 100,
+        bool noOccult = false,
+        bool verbose = false
+    )
+    {
+        List<string> skillsChanged = [];
+
+        int currentSkillImprovements = 0;
+        string[] skillNames = [.. skills.Keys];
+        Random.Shared.Shuffle(skillNames);
+
+        foreach (string skill in skillNames)
+        {
+            if (skill == "unnatural" || (skill == "occult" && noOccult))
+                continue;
+
+            if (Random.Shared.Next(1, 100) > skills[skill])
+            {
+                if (min < max)
+                {
+                    skills[skill] += Random.Shared.Next(min, max);
+                }
+                else
+                {
+                    skills[skill] += min;
+                }
+                skillsChanged.Add(skill);
+                currentSkillImprovements++;
+            }
+
+            if (currentSkillImprovements >= numberOfSkills)
+                break;
+        }
+
+        if (verbose)
+            Console.WriteLine($"Veterancy: skills changed {string.Join(", ", skillsChanged)}");
+    }
+
+    static void GenerateDamage(
+        ref Statistics stats,
+        ref DerivedStatistics derivedStatistics,
+        ref Dictionary<string, int> skills,
+        ref List<string> bonds,
+        out List<string> disorders,
+        bool verbose = false
+    )
+    {
+        disorders = [];
+        int type = Random.Shared.Next(0, 100);
+
+        if (type < 30)
+        {
+            //Extreme Violence
+            skills["occult"] += 10;
+            derivedStatistics.SAN -= 5;
+            stats.Charisma -= 3;
+            disorders.Add("Adapted to violence");
+
+            if (verbose)
+                Console.WriteLine("Damaged: Extreme Violence");
+        }
+        else if (type < 60)
+        {
+            // Captivity
+            skills["occult"] += 10;
+            derivedStatistics.SAN -= 5;
+            stats.Charisma -= 3;
+            disorders.Add("Adapted to helplessness");
+
+            if (verbose)
+                Console.WriteLine("Damaged: Captivity");
+        }
+        else if (type < 90)
+        {
+            //Hard Experience
+            skills["occult"] += 10;
+            GenerateVeterancy(ref skills, 5, 10, 10, 90, true, verbose);
+            bonds.Remove(Random.Shared.GetItems(bonds.ToArray(), 1).First());
+
+            if (verbose)
+                Console.WriteLine("Damaged: Hard Experience");
+        }
+        else
+        {
+            //Things Man Was Not Meant to Know
+            string file = "data/disorders.txt";
+            string[] disorderList = File.ReadAllLines(file);
+
+            skills["unnatural"] += 10;
+            skills["occult"] += 20;
+            derivedStatistics.SAN -= stats.Power;
+            derivedStatistics.BreakingPoint = derivedStatistics.SAN - stats.Power;
+            disorders.Add(Random.Shared.GetItems(disorderList, 1).First());
+
+            if (verbose)
+                Console.WriteLine("Damaged: Things Man Was Not Meant to Know");
+        }
     }
 
     static NPCType AgeToNPCType(int age)

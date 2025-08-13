@@ -165,7 +165,10 @@ public partial record Character(
                     ? $"SPECIAL TRAINING: {string.Join(", ", SpecialTraining.Select(s => ti.ToTitleCase(s)))}"
                     : ""
             },
-            { @"{bonds}", $"BONDS: {string.Join("\n", Bonds)}" },
+            {
+                @"{bonds}",
+                $"BONDS: {string.Join("\n", Bonds.Select(b => $"{b}, {Stats.Charisma}."))}"
+            },
             {
                 @"{motivations_disorders}",
                 $"MOTIVATIONS AND DISORDERS: {string.Join("\n", MotivationsDisorders)}"
