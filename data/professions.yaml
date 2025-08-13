@@ -41,3 +41,41 @@ cid:
       - hand_grenades
   bonds: 3
   gear_kit: agent
+
+anthropologist:
+  label: Anthropologist
+  employer: <University>
+  skills:
+    always:
+      anthropology: 50
+      bureaucracy: 40
+      foreign language (*): 50
+      foreign language (*2): 40
+      history: 60
+      occult: 40
+      persuade: 40
+    pick_amount: 2
+    pick:
+      archeology: 40
+      HUMINT: 50
+      navigate: 50
+      ride: 50
+      search: 60
+      survival: 50
+  bonds: 4
+  npc:
+    important_stats:
+      - int
+    important_skills:
+      - anthropology
+      - archeology
+      - foreign language (*)
+      - occult
+      - history
+      - search
+  special_training:
+    chance: 40
+    trainings:
+      - fluency_rare_dialect
+      - deep_subculture
+  gear_kit: civilian

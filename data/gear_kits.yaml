@@ -8,14 +8,12 @@ agent:
     chance: 33
   - item: carbine
     chance: 10
-
   armor:
   - item: kevlar_vest
   - item: tactical_vest
     chance: 25
   - item: kevlar_helmet
     chance: 25
-  
   other:
   - item: badge
   - item: id_card
@@ -26,3 +24,13 @@ agent:
     chance: 50
   - item: first_aid_kit
     chance: 50
+
+civilian:
+  weapons:
+  - item: unarmed
+  - item: light_pistol
+    chance: 25
+  other:
+  - item: smartphone
+  - item: laptop
+  - item: flashlight

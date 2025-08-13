@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using Spectre.Console;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -539,7 +537,7 @@ public static class CharGen
 
     static string GetSkillTypes(string skillName, Nation ownNation)
     {
-        if (skillName.Contains("(*)"))
+        if (skillName.Contains("(*"))
         {
             string yamlContent = File.ReadAllText("data/skill_types.yaml");
             IDeserializer deserializer = new DeserializerBuilder()
@@ -551,7 +549,12 @@ public static class CharGen
                 Dictionary<string, List<string>>
             >(yamlContent);
 
-            skillName = skillName[..^4]; // Remove the " (*)" part
+            // Remove everything after "skillName" and before "(*...)" pattern
+            int idx = skillName.IndexOf("(*");
+            if (idx >= 0)
+            {
+                skillName = skillName[..idx].Trim();
+            }
 
             if (skillName == "foreign language")
             {
@@ -628,7 +631,6 @@ public static class CharGen
                         )
                     )
                     {
-                        // Format the training details
                         string formattedTraining =
                             $"{trainingDetails["name"]} ({trainingDetails["link"]})";
                         specialTrainings.Add(formattedTraining);
@@ -903,11 +905,14 @@ public static class CharGen
             {
                 if (min < max)
                 {
-                    skills[skill] += Random.Shared.Next(min, max);
+                    skills[skill] = Math.Min(
+                        skills[skill] + Random.Shared.Next(min, max),
+                        maxSkill
+                    );
                 }
                 else
                 {
-                    skills[skill] += min;
+                    skills[skill] = Math.Min(skills[skill] + min, maxSkill);
                 }
                 skillsChanged.Add(skill);
                 currentSkillImprovements++;

@@ -22,8 +22,7 @@ public class Program
 
         Option<string> professionOption = new("--profession", "-p")
         {
-            Description = "Profession of the character to generate.",
-            DefaultValueFactory = _ => "cid",
+            Description = "Profession of the character to generate. Otherwise picked randomly.",
             Arity = ArgumentArity.ZeroOrOne,
         };
         rootCommand.Options.Add(professionOption);
@@ -106,7 +105,7 @@ public class Program
             {
                 int count = parseResult.GetValue(countOption);
                 CharacterType type = parseResult.GetValue(typeOption);
-                string professionName = parseResult.GetValue(professionOption) ?? "cid"; //TODO: Randomize
+                string? professionName = parseResult.GetValue(professionOption);
                 bool randomNationality = parseResult.GetValue(randomNationalityOption);
                 int[] ageRange = parseResult.GetValue(ageOption) ?? [25, 55];
                 if (ageRange.Length == 1)
@@ -142,7 +141,7 @@ public class Program
     private static void Generate(
         CharacterType type,
         int count,
-        string professionName,
+        string? professionName,
         int[] ageRange,
         bool randomNationality,
         bool veteran,
@@ -179,7 +178,7 @@ public class Program
         }
     }
 
-    private static Profession GetProfession(string professionName)
+    private static Profession GetProfession(string professionName = null)
     {
         IDeserializer deserializer = new DeserializerBuilder()
             .IgnoreUnmatchedProperties()
@@ -192,7 +191,16 @@ public class Program
             Dictionary<string, Profession>
         >(yamlContent);
 
-        Profession profession = professions[professionName];
+        Profession profession;
+        if (professionName is not null)
+        {
+            profession = professions[professionName];
+        }
+        else
+        {
+            profession = Random.Shared.GetItems(professions.Values.ToArray(), 1).First();
+        }
+
         return profession;
     }
 }
