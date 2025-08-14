@@ -20,19 +20,19 @@ anthropologist:
   bonds: 4
   npc:
     important_stats:
-      - int
+    - int
     important_skills:
-      - anthropology
-      - archeology
-      - foreign language (*)
-      - occult
-      - history
-      - search
+    - anthropology
+    - archeology
+    - foreign language (*)
+    - occult
+    - history
+    - search
   special_training:
     chance: 40
     trainings:
-      - fluency_rare_dialect
-      - deep_subculture
+    - fluency_rare_dialect
+    - deep_subculture
   gear_kit: civilian
 
 engineer:
@@ -66,7 +66,7 @@ engineer:
   special_training:
     chance: 30
     trainings:
-      - electronic_security
+    - electronic_security
   gear_kit: civilian
 
 federal_agent:
@@ -94,21 +94,21 @@ federal_agent:
   bonds: 3
   npc:
     important_stats:
-      - con
-      - int
+    - con
+    - int
     important_skills:
-      - alertness
-      - criminology
-      - firearms
-      - HUMINT
-      - persuade
-      - unarmed combat
+    - alertness
+    - criminology
+    - firearms
+    - HUMINT
+    - persuade
+    - unarmed combat
   special_training:
     chance: 30
     trainings:
-      - exotic_melee
-      - exotic_firearm
-      - hand_grenades
+    - exotic_melee
+    - exotic_firearm
+    - hand_grenades
   gear_kit: agent
 
 physician:
@@ -196,33 +196,631 @@ special_operator:
   bonds: 2
   npc:
     important_stats:
-      - str
-      - con
+    - str
+    - con
     important_skills:
-      - alertness
-      - athletics
-      - firearms
-      - heavy weapons
-      - melee weapons
-      - military science (land)
-      - swim
-      - unarmed combat
+    - alertness
+    - athletics
+    - firearms
+    - heavy weapons
+    - melee weapons
+    - military science (land)
+    - swim
+    - unarmed combat
   special_training:
     chance: 60
     trainings:
-      - exotic_melee
-      - exotic_firearm
-      - hand_grenades
-      - scuba
-      - parachuting
-      - lockpicks
+    - exotic_melee
+    - exotic_firearm
+    - hand_grenades
+    - scuba
+    - parachuting
+    - lockpicks
   gear_kit: specops
 
-# OVERRIDES
+# Additional Professions
+criminal:
+  label: Criminal
+  skills:
+    always:
+      alertness: 50
+      athletics: 50
+      criminology: 60
+      dodge: 40
+      drive: 50
+      firearms: 40
+      law: 20
+      melee weapons: 40
+      persuade: 50
+      stealth: 50
+      unarmed combat: 50
+    pick_amount: 2
+    pick:
+      craft (locksmithing): 40
+      demolitions: 40
+      disguise: 50
+      foreign language (*): 40
+      forensics: 40
+      HUMINT: 50
+      navigate: 50
+      occult: 50
+      pharmacy: 40
+  bonds: 4
+  npc:
+    important_stats:
+    - str
+    important_skills:
+    - alertness
+    - drive
+    - firearms
+    - melee weapons
+    - unarmed combat
+  special_training:
+    chance: 60
+    trainings:
+    - lockpicks
+    - black_markets
+    - deep_subculture
+    - electronic_security
+  gear_kit: criminal
 
-# FBI overrides
-cid:
+firefighter:
+  label: Firefighter
+  skills:
+    always:
+      alertness: 50
+      athletics: 60
+      craft (electrician): 40
+      craft (mechanic): 40
+      demolitions: 50
+      drive: 50
+      first aid: 50
+      forensics: 40
+      heavy machinery: 50
+      navigate: 50
+      search: 40
+  bonds: 3
+  npc:
+    important_stats:
+    - str
+    - con
+    important_skills:
+    - alertness
+    - athletics
+    - demolitions
+    - first aid
+    - heavy machinery
+  special_training:
+    chance: 25
+    trainings:
+    - lockpicks
+  gear_kit: civilian
+
+foreign_service_officer:
+  label: Foreign Service Officer
+  skills:
+    always:
+      accounting: 40
+      anthropology: 40
+      bureaucracy: 60
+      foreign language (*): 50
+      foreign language (*2): 50
+      foreign language (*3): 40
+      history: 40
+      HUMINT: 50
+      law: 40
+      persuade: 50
+  bonds: 3
+  npc:
+    important_stats:
+    - int
+    - cha
+    important_skills:
+    - bureaucracy
+    - anthropology
+    - HUMINT
+    - persuade
+    - foreign language (*)
+  special_training:
+    chance: 40
+    trainings:
+    - deep_subculture
+    - another_country_criminal_codes
+    - fluency_rare_dialect
+  gear_kit: civilian_officer
+
+intelligence_officer:
+  label: Intelligence Officer
+  skills:
+    always:
+      anthropology: 40
+      bureaucracy: 50
+      computer science: 40
+      criminology: 40
+      foreign language (*): 50
+      foreign language (*2): 50
+      foreign language (*3): 40
+      history: 40
+      HUMINT: 50
+      SIGINT: 40
+  bonds: 3
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - HUMINT
+    - SIGINT
+    - foreign language (*)
+    - computer science
+    - criminology
+  special_training:
+    chance: 30
+    trainings:
+    - electronic_security
+    - inside_conspiracy
+    - fluency_rare_dialect
+    - another_country_criminal_codes
+    - deep_subculture
+    - black_markets
+  gear_kit: civilian_officer
+
+intelligence_case_officer:
+  label: Intelligence Case Officer
+  skills:
+    always:
+      alertness: 50
+      bureaucracy: 40
+      criminology: 50
+      disguise: 50
+      drive: 40
+      firearms: 40
+      foreign language (*): 50
+      foreign language (*2): 40
+      HUMINT: 60
+      persuade: 60
+      SIGINT: 40
+      stealth: 50
+      unarmed combat: 50
+  bonds: 2
+  npc:
+    important_stats:
+    - con
+    - int
+    important_skills:
+    - alertness
+    - criminology
+    - firearms
+    - HUMINT
+    - SIGINT
+    - foreign language (*)
+  special_training:
+    chance: 40
+    trainings:
+    - electronic_security
+    - inside_conspiracy
+    - fluency_rare_dialect
+    - another_country_criminal_codes
+    - deep_subculture
+    - black_markets
+  gear_kit: agent
+
+executive:
+  label: Business Executive / Lawyer
+  skills:
+    always:
+      accounting: 50
+      bureaucracy: 50
+      HUMINT: 40
+      persuade: 60
+    pick_amount: 4
+    pick:
+      computer science: 50
+      criminology: 60
+      foreign language (*): 50
+      law: 50
+      pharmacy: 50
+  bonds: 4
+  npc:
+    important_stats:
+    - int
+    - cha
+    important_skills:
+    - bureaucracy
+    - HUMINT
+    - law
+    - persuade
+    - accounting
+  special_training:
+    chance: 5
+    trainings:
+    - another_country_criminal_codes
+    - inside_conspiracy
+  gear_kit: civilian
+
+media_specialist:
+  label: Media Specialist
+  skills:
+    always:
+      art (*): 60
+      history: 40
+      HUMINT: 40
+      persuade: 50
+    pick_amount: 5
+    pick:
+      anthropology: 40
+      archeology: 40
+      art (*): 40
+      bureaucracy: 50
+      computer science: 40
+      criminology: 50
+      foreign language (*): 40
+      law: 40
+      military science (*): 40
+      occult: 50
+      science (*): 40
+  bonds: 4
+  npc:
+    important_stats:
+    - int
+    - cha
+    important_skills:
+    - art (*)
+    - history
+    - HUMINT
+    - persuade
+    - computer science
+  special_training:
+    chance: 10
+    trainings:
+    - deep_subculture
+  gear_kit: techy
+
+nurse:
+  label: Nurse / Paramedic
+  skills:
+    always:
+      alertness: 40
+      bureaucracy: 40
+      first aid: 60
+      HUMINT: 40
+      medicine: 40
+      persuade: 40
+      pharmacy: 40
+      science (biology): 40
+    pick_amount: 2
+    pick:
+      drive: 60
+      forensics: 40
+      navigate: 50
+      psychotherapy: 50
+      search: 60
+  bonds: 4
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - alertness
+    - first aid
+    - HUMINT
+    - pharmacy
+    - search
+  special_training:
+    chance: 5
+    trainings:
+    - deep_subculture
+  gear_kit: medicine
+
+pilot:
+  label: Pilot / Sailor
+  skills:
+    always:
+      alertness: 60
+      bureaucracy: 30
+      craft (electrician): 40
+      craft (mechanic): 40
+      navigate: 50
+      pilot (*): 60
+      science (meteorology): 40
+      swim: 40
+    pick_amount: 2
+    pick:
+      foreign language (*): 50
+      pilot (*): 50
+      heavy weapons: 50
+      military science (*): 50
+  bonds: 3
+  npc:
+    important_stats:
+    - dex
+    - int
+    important_skills:
+    - alertness
+    - craft (*)
+    - navigate
+    - pilot (*)
+  special_training:
+    chance: 50
+    trainings:
+    - parachuting
+    - scuba
+  gear_kit: civilian
+
+police_officer:
+  label: Police Officer
+  skills:
+    always:
+      alertness: 60
+      bureaucracy: 40
+      criminology: 40
+      drive: 50
+      firearms: 40
+      first aid: 30
+      HUMINT: 50
+      law: 30
+      melee weapons: 50
+      navigate: 40
+      persuade: 40
+      search: 40
+      unarmed combat: 60
+    pick_amount: 1
+    pick:
+      forensics: 50
+      heavy machinery: 60
+      heavy weapons: 50
+      ride: 60
+  bonds: 3
+  npc:
+    important_stats:
+    - str
+    - con
+    important_skills:
+    - alertness
+    - drive
+    - firearms
+    - HUMINT
+    - persuade
+    - unarmed combat
+  special_training:
+    special_training:
+    chance: 30
+    trainings:
+    - exotic_melee
+    - exotic_firearm
+    - hand_grenades
+  gear_kit: agent
+
+program_manager:
+  label: Program Manager
+  skills:
+    always:
+      accounting: 60
+      bureaucracy: 60
+      computer science: 50
+      criminology: 30
+      foreign language (*): 50
+      history: 40
+      law: 40
+      persuade: 50
+    pick_amount: 1
+    pick:
+      anthropology: 30
+      art (*): 30
+      craft (*): 30
+      science (*): 30
+  bonds: 4
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - accounting
+    - bureaucracy
+    - law
+    - persuade
+    - computer science
+  special_training:
+    chance: 5
+    trainings:
+    - another_country_criminal_codes
+    - inside_conspiracy
+  gear_kit: techy
+
+soldier:
+  label: Soldier / Marine
+  skills:
+    always:
+      alertness: 50
+      athletics: 50
+      bureaucracy: 30
+      drive: 40
+      firearms: 40
+      first aid: 40
+      military science (land): 40
+      navigate: 40
+      persuade: 30
+      unarmed combat: 50
+    pick_amount: 3
+    pick:
+      artillery: 40
+      computer science: 40
+      craft (*): 40
+      demolitions: 40
+      foreign language (*): 40
+      heavy machinery: 50
+      heavy weapons: 40
+      search: 60
+      SIGINT: 40
+      swim: 60
+  bonds: 4
+  npc:
+    important_stats:
+    - con
+    important_skills:
+    - alertness
+    - athletics
+    - firearms
+    - military science (land)
+    - navigate
+  special_training:
+    chance: 30
+    trainings:
+    - exotic_melee
+    - exotic_firearm
+    - hand_grenades
+    - scuba
+    - parachuting
+    - lockpicks
+  gear_kit: specops
+
+# Complex
+
+# CBP
+cbp_border_protection:
+  override: federal_agent
+  label: Border Protection Officer
+  employer: CBP
+  division: OFO/P
+
+cbp_marine_interdiction:
+  label: Marine Interdiction Officer
+  employer: CBP
+  division: AMO/MI
+  skills:
+    always:
+      alertness: 50
+      bureaucracy: 30
+      criminology: 50
+      drive: 50
+      firearms: 50
+      forensics: 30
+      foreign language (spanish): 50
+      heavy weapons: 30
+      HUMINT: 60
+      law: 30
+      persuade: 40
+      pilot (boat): 60
+      search: 50
+      swim: 50
+      unarmed combat: 60
+    pick_amount: 0
+  bonds: 2
+  npc:
+    important_stats:
+    - con
+    - int
+    important_skills:
+    - alertness
+    - criminology
+    - firearms
+    - HUMINT
+    - persuade
+    - unarmed combat
+  special_training:
+    chance: 30
+    trainings:
+    - exotic_melee
+    - exotic_firearm
+    - hand_grenades
+  gear_kit: agent
+
+cbp_detection_canine:
+  override: federal_agent
+  label: Detection Canine Officer
+  employer: CBP
+  division: OFO/K9
+
+cbp_border_patrol:
+  override: federal_agent
+  label: Border Patrol Officer
+  employer: CBP
+  division: Border Patrol
+
+cbp_border_tactical:
+  label: Border Tactical Unit
+  employer: CBP
+  division: SOG/BORTAC
+  skills:
+    always:
+      alertness: 50
+      bureaucracy: 20
+      criminology: 50
+      drive: 50
+      firearms: 50
+      forensics: 30
+      foreign language (spanish): 40
+      HUMINT: 40
+      law: 30
+      navigate: 60
+      persuade: 50
+      pharmacy: 50
+      search: 50
+      survival: 60
+      unarmed combat: 60
+    pick_amount: 0
+  bonds: 2
+  npc:
+    important_stats:
+    - con
+    - int
+    important_skills:
+    - alertness
+    - criminology
+    - firearms
+    - HUMINT
+    - persuade
+    - unarmed combat
+  special_training:
+    chance: 30
+    trainings:
+    - exotic_melee
+    - exotic_firearm
+    - hand_grenades
+    - scuba
+    - parachuting
+    - lockpicks
+  gear_kit: specops
+
+cbp_border_rescue:
+  label: Border Patrol Search, Trauma and Rescue Unit
+  employer: CBP
+  division: SOG/BORSTAR
+  skills:
+    always:
+      bureaucracy: 50
+      first aid: 60
+      forensics: 50
+      medicine: 60
+      navigate: 40
+      persuade: 40
+      pharmacy: 50
+      science (biology): 50
+      search: 50
+      surgery: 50
+      survival: 30
+    pick_amount: 0
+  bonds: 2
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - alertness
+    - first aid
+    - HUMINT
+    - pharmacy
+    - search
+  special_training:
+    chance: 5
+    trainings:
+    - deep_subculture
+  gear_kit: medicine
+
+cbp_air_security:
+  override: federal_agent
+  label: National Air Security Officer
+  employer: CBP
+  division: AMO/NASO
+
+# FBI
+fbi_cid:
   override: federal_agent
   employer: FBI
   division: CID
-  

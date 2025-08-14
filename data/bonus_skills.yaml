@@ -1,4 +1,4 @@
-artist: 
+artist:
 - alertness
 - craft (*)
 - disguise
@@ -8,7 +8,7 @@ artist:
 - art (*)
 - HUMINT
 
-athlete: 
+athlete:
 - alertness
 - athletics
 - dodge

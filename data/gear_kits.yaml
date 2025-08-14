@@ -26,6 +26,20 @@ agent:
   - item: first_aid_kit
     chance: 50
 
+civilian_officer:
+  weapons:
+  - item: unarmed
+  - item: light_pistol
+    chance: 40
+  other:
+  - item: smartphone
+  - item: laptop
+    chance: 60
+  - item: flashlight
+    chance: 50
+  - item: badge
+  - item: id_card
+
 specops:
   weapons:
   - item: unarmed
@@ -58,9 +72,11 @@ civilian:
     chance: 30
   other:
   - item: smartphone
+    chance: 95
   - item: laptop
     chance: 30
   - item: flashlight
+    chance: 50
 
 techy:
   weapons:
@@ -71,6 +87,7 @@ techy:
   - item: smartphone
   - item: laptop
   - item: flashlight
+    chance: 50
 
 medicine:
   weapons:
@@ -82,4 +99,33 @@ medicine:
   - item: laptop
     chance: 30
   - item: flashlight
+    chance: 50
   - item: first_aid_kit
+
+criminal:
+  weapons:
+  - item: unarmed
+  - item: medium_pistol
+    chance: 75
+  - item: light_pistol
+    chance: 50
+  - item: knife
+    chance: 75
+  - item: club
+    chance: 30
+  - item: shotgun
+    chance: 30
+  - item: smg
+    chance: 30
+  armor:
+  - item: kevlar_vest
+    chance: 40
+  other:
+  - item: smartphone
+  - item: flashlight
+  - item: lockpick_set
+    chance: 75
+  - item: lockpick_gun
+    chance: 25
+  - item: burner_phone
+    chance: 33

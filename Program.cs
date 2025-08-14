@@ -205,8 +205,15 @@ public class Program
         {
             if (professions.TryGetValue(profession.Override, out Profession overriddenProfession))
             {
+                string newLabel = overriddenProfession.Label;
+                if (!string.IsNullOrEmpty(profession.Label))
+                {
+                    newLabel = profession.Label;
+                }
+
                 profession = overriddenProfession with
                 {
+                    Label = newLabel,
                     Employer = profession.Employer,
                     Division = profession.Division,
                 };

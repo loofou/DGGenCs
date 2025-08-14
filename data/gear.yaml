@@ -5,12 +5,12 @@ weapons:
     damage: 1d4-1
   knife:
     name: Knife
-    skill: melee combat
+    skill: melee weapons
     damage: 1d4
     armor_piercing: 3
   club:
     name: Club
-    skill: melee combat
+    skill: melee weapons
     damage: 1d6
 
   stun_gun:
