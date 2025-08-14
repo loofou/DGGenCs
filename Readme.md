@@ -74,3 +74,9 @@ After building, you can run the tool with:
 ```
 ./bin/Debug/net9.0/DGGenCs.exe
 ```
+
+## License
+
+DDGenCs is licensed under the Unlicense (tldr: Do whatever you want with it, but don't expect support. Then again, feel free to ask for feature requests in the github Issues, I might just add them :) just no guarantee!). 
+
+The intellectual property known as Delta Green is ™ and © the Delta Green Partnership (http://www.delta-green.com). This tool is released under the "[FIELD REPORTS & FAN CREATIONS](https://www.delta-green.com/questions/)" guidelines.
