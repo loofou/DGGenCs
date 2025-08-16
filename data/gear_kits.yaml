@@ -26,6 +26,31 @@ agent:
   - item: first_aid_kit
     chance: 50
 
+medic:
+  weapons:
+  - item: unarmed
+  - item: medium_pistol
+  - item: light_pistol
+    chance: 50
+  - item: smg
+    chance: 33
+  armor:
+  - item: kevlar_vest
+  - item: tactical_vest
+    chance: 25
+  - item: kevlar_helmet
+    chance: 25
+  other:
+  - item: badge
+  - item: id_card
+  - item: handcuffs
+  - item: flashlight
+  - item: smartphone
+  - item: earpiece
+  - item: walkie_talkie
+    chance: 50
+  - item: first_aid_kit
+
 civilian_officer:
   weapons:
   - item: unarmed

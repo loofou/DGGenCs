@@ -819,6 +819,183 @@ cbp_air_security:
   employer: CBP
   division: AMO/NASO
 
+# ATF
+
+atf_tactical_canine:
+  override: federal_agent
+  label: Tactical Canine Officer
+  employer: ATF
+  division: SRT/K9
+
+atf_tactical_medic:
+  label: Tactical Medic Officer
+  employer: ATF
+  division: SRT/TMP
+  skills:
+    always:
+      alertness: 50
+      bureaucracy: 40
+      criminology: 50
+      drive: 50
+      firearms: 50
+      first aid: 50
+      forensics: 30
+      HUMINT: 60
+      law: 30
+      medicine: 30
+      military science (land): 30
+      persuade: 50
+      pharmacy: 50
+      search: 50
+      unarmed combat: 60
+    pick_amount: 0
+  bonds: 1
+  npc:
+    important_stats:
+    - int
+    important_skills:
+    - alertness
+    - first aid
+    - HUMINT
+    - pharmacy
+    - firearms
+  special_training:
+    chance: 20
+    trainings:
+    - exotic_melee
+    - exotic_firearm
+  gear_kit: medic
+
+atf_tactical_ops:
+  label: Tactical Operations Officer
+  employer: ATF
+  division: SRT/TO
+  skills:
+    always:
+      alertness: 60
+      athletics: 60
+      demolitions: 50
+      dodge: 60
+      firearms: 60
+      first aid: 40
+      heavy weapons: 50
+      melee weapons: 50
+      military science (land): 30
+      navigate: 50
+      stealth: 60
+      survival: 50
+      swim: 50
+      unarmed combat: 60
+    pick_amount: 0
+  bonds: 1
+  npc:
+    important_stats:
+    - str
+    - con
+    important_skills:
+    - alertness
+    - athletics
+    - firearms
+    - heavy weapons
+    - melee weapons
+    - military science (land)
+    - swim
+    - unarmed combat
+  special_training:
+    chance: 60
+    trainings:
+    - exotic_melee
+    - exotic_firearm
+    - hand_grenades
+    - scuba
+    - parachuting
+    - lockpicks
+  gear_kit: specops
+
+atf_field_operations:
+  override: federal_agent
+  labeL: Field & Investigations Officer
+  employer: ATF
+  division: OFO
+
+atf_criminal_analyst:
+  label: Criminal Investigative Analyst
+  employer: ATF
+  skills:
+    always:
+      bureaucracy: 40
+      computer science: 40
+      criminology: 50
+      foreign language (spanish): 40
+      forensics: 40
+      HUMINT: 60
+      law: 40
+      psychotherapy: 30
+      science (biology): 50
+      science (statistics): 50
+    pick_amount: 0
+  bonds: 3
+  npc:
+    important_stats:
+    - con
+    - int
+    important_skills:
+    - bureaucracy
+    - criminology
+    - forensics
+    - HUMINT
+    - foreign language (spanish)
+  special_training:
+    chance: 30
+    trainings:
+    - inside_conspiracy
+    - fluency_rare_dialect
+    - another_country_criminal_codes
+    - deep_subculture
+    - black_markets
+  gear_kit: techy
+
+explosives_specialist:
+  label: Explosives Specialist
+  employer: ATF
+  skills:
+    always:
+      alertness: 60
+      artillery: 40
+      athletics: 60
+      demolitions: 60
+      dodge: 60
+      firearms: 50
+      first aid: 40
+      heavy machinery: 60
+      heavy weapons: 50
+      military science (land): 20
+      stealth: 50
+      survival: 50
+      swim: 50
+      unarmed combat: 50
+    pick_amount: 0
+  bonds: 1
+  npc:
+    important_stats:
+    - con
+    - dex
+    important_skills:
+    - alertness
+    - artillery
+    - demolitions
+    - firearms
+    - dodge
+    - survival
+  special_training:
+    chance: 50
+    trainings:
+    - scuba
+    - exotic_firearm
+    - hand_grenades
+    - black_markets
+  gear_kit: techy
+
 # FBI
 fbi_cid:
   override: federal_agent
