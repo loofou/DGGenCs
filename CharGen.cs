@@ -91,8 +91,6 @@ public static class CharGen
         int minAge,
         int maxAge,
         Sex? sexOverride = null,
-        string? labelOverride = null,
-        string? employerOverride = null,
         bool randomNationality = false,
         bool veteran = false,
         bool damaged = false,
@@ -108,8 +106,6 @@ public static class CharGen
             profession,
             minAge,
             maxAge,
-            labelOverride,
-            employerOverride,
             randomNationality
         );
         if (verbose)
@@ -181,8 +177,6 @@ public static class CharGen
         Profession profession,
         int minAge,
         int maxAge,
-        string? labelOverride,
-        string? employerOverride,
         bool randomNationality = false
     )
     {
@@ -210,10 +204,9 @@ public static class CharGen
             age,
             birthDay,
             nation,
-            labelOverride ?? profession.Label,
-            employerOverride
-                ?? profession.Employer
-                    + (profession.Division is not null ? $" ({profession.Division})" : "")
+            profession.Label,
+            profession.Employer
+                + (profession.Division is not null ? $" ({profession.Division})" : "")
         );
     }
 

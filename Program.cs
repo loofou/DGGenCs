@@ -27,6 +27,14 @@ public class Program
         };
         rootCommand.Options.Add(professionOption);
 
+        Option<string> employerOption = new("--employer", "-e")
+        {
+            Description =
+                "Pick any profession of the given employer. Otherwise all employers are valid.",
+            Arity = ArgumentArity.ZeroOrOne,
+        };
+        rootCommand.Options.Add(employerOption);
+
         Option<int> countOption = new("--count", "-c")
         {
             Description = "Number of characters to generate.",
@@ -106,6 +114,7 @@ public class Program
                 int count = parseResult.GetValue(countOption);
                 CharacterType type = parseResult.GetValue(typeOption);
                 string? professionName = parseResult.GetValue(professionOption);
+                string? employerName = parseResult.GetValue(employerOption);
                 bool randomNationality = parseResult.GetValue(randomNationalityOption);
                 int[] ageRange = parseResult.GetValue(ageOption) ?? [25, 55];
                 if (ageRange.Length == 1)
@@ -122,6 +131,7 @@ public class Program
                     type,
                     count,
                     professionName,
+                    employerName,
                     ageRange,
                     randomNationality,
                     veteran,
@@ -142,6 +152,7 @@ public class Program
         CharacterType type,
         int count,
         string? professionName,
+        string? employerName,
         int[] ageRange,
         bool randomNationality,
         bool veteran,
@@ -151,34 +162,48 @@ public class Program
     {
         for (int i = 0; i < count; i++)
         {
-            Profession profession = GetProfession(professionName);
-
-            AnsiConsole.MarkupLine($"[blue]Generating character {i + 1} of {count}...[/]");
-
-            if (verbose)
+            try
             {
-                Console.WriteLine($"Profession: {profession}");
+                Profession profession = GetProfession(professionName, employerName);
+
+                AnsiConsole.MarkupLine($"[blue]Generating character {i + 1} of {count}...[/]");
+
+                if (verbose)
+                {
+                    Console.WriteLine($"Profession: {profession}");
+                }
+
+                Character character = CharGen.GenerateNewCharacter(
+                    type,
+                    profession,
+                    ageRange[0],
+                    ageRange[1],
+                    veteran: veteran,
+                    damaged: damaged,
+                    randomNationality: randomNationality,
+                    verbose: verbose
+                );
+
+                AnsiConsole.MarkupLine($"[green]Character {character.Name} generated.[/]");
+                string output = character.ToString();
+
+                File.WriteAllText(Path.Combine("out", $"Character_{i + 1}.txt"), output);
             }
-
-            Character character = CharGen.GenerateNewCharacter(
-                type,
-                profession,
-                ageRange[0],
-                ageRange[1],
-                veteran: veteran,
-                damaged: damaged,
-                randomNationality: randomNationality,
-                verbose: verbose
-            );
-
-            AnsiConsole.MarkupLine($"[green]Character {character.Name} generated.[/]");
-            string output = character.ToString();
-
-            File.WriteAllText(Path.Combine("out", $"Character_{i + 1}.txt"), output);
+            catch (Exception ex)
+            {
+                AnsiConsole.MarkupLine($"[red]Error while generating character {i}![/]");
+                AnsiConsole.WriteException(
+                    ex,
+                    ExceptionFormats.ShortenPaths
+                        | ExceptionFormats.ShortenMethods
+                        | ExceptionFormats.ShowLinks
+                );
+                break;
+            }
         }
     }
 
-    private static Profession GetProfession(string? professionName)
+    private static Profession GetProfession(string? professionName, string? employerName)
     {
         IDeserializer deserializer = new DeserializerBuilder()
             .IgnoreUnmatchedProperties()
@@ -191,10 +216,38 @@ public class Program
             Dictionary<string, Profession>
         >(yamlContent);
 
+        var allProfessions = professions;
+
+        if (employerName is not null)
+        {
+            professions = professions
+                .Where(p =>
+                    p.Value.Employer?.Equals(
+                        employerName,
+                        StringComparison.InvariantCultureIgnoreCase
+                    ) ?? false
+                )
+                .ToDictionary(p => p.Key, p => p.Value);
+
+            if (professions.Count == 0)
+            {
+                throw new ArgumentException($"No employer found with name '{employerName}'.");
+            }
+        }
+
         Profession profession;
         if (professionName is not null)
         {
-            profession = professions[professionName];
+            try
+            {
+                profession = professions[professionName];
+            }
+            catch (Exception)
+            {
+                throw new KeyNotFoundException(
+                    $"Profession override '{professionName}' not found in available professions list."
+                );
+            }
         }
         else
         {
@@ -203,7 +256,9 @@ public class Program
 
         if (profession.Override is not null)
         {
-            if (professions.TryGetValue(profession.Override, out Profession overriddenProfession))
+            if (
+                allProfessions.TryGetValue(profession.Override, out Profession overriddenProfession)
+            )
             {
                 string newLabel = overriddenProfession.Label;
                 if (!string.IsNullOrEmpty(profession.Label))
@@ -221,7 +276,7 @@ public class Program
             else
             {
                 throw new KeyNotFoundException(
-                    $"Profession override '{profession.Override}' not found in professions.yaml"
+                    $"Profession override '{profession.Override}' not found in available professions list."
                 );
             }
         }

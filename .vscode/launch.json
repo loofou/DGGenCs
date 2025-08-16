@@ -10,7 +10,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net9.0/DGGenCs.dll",
-      "args": ["--verbose","-c","100","-v", "-d"],
+      "args": ["--verbose","-c","100","-v", "-d", "-e", "ATF"],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "console": "integratedTerminal"

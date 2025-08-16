@@ -21,29 +21,36 @@ Download the latest release from github or build the tool yourself. Then you can
 
 ### Arguments
 
-| Argument                | Short | Description                                                                  | Default |
-|-------------------------|-------|------------------------------------------------------------------------------|---------|
-| --type <agent\|npc>      | -t    | Type of character to generate (agent or npc). NPCs use the simpler stat creation method from the Handlers Guide p. 354. Agents use the full stat creation system from the Agents Handbook. Age is taken into account only for NPCs! | agent   |
-| --profession <name>     | -p    | Profession of the character to generate                                      | cid     |
-| --count <number>        | -c    | Number of characters to generate                                             | 1       |
-| --random-nationality    | -r    | Generate characters with random nationalities (otherwise uses the USA)       | false   |
-| --age <min> [max]       | -a    | Age range for the character (min,max) or single number for constant age      | 25 55   |
-| --veteran               | -v    | Generate characters with a few random skill increases already                | false   |
-| --damaged               | -d    | Generate characters with exposure to the Unnatural, leaving them damaged     | false   |
-| --verbose               |        | Enable verbose output for debug purposes.                                    | false   |
+| Argument             | Short | Description                                                                                                                                                                                                                         | Default |
+| -------------------- | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| --type <agent\|npc>  | -t    | Type of character to generate (agent or npc). NPCs use the simpler stat creation method from the Handlers Guide p. 354. Agents use the full stat creation system from the Agents Handbook. Age is taken into account only for NPCs! | agent   |
+| --profession <name>  | -p    | Profession of the character to generate. Otherwise picked randomly.                                                                                                                                                                 |         |
+| --employer <name>    | -e    | Pick any profession of the given employer. Otherwise all employers are valid.                                                                                                                                                       |         |
+| --count <number>     | -c    | Number of characters to generate                                                                                                                                                                                                    | 1       |
+| --random-nationality | -r    | Generate characters with random nationalities (otherwise uses the USA)                                                                                                                                                              | false   |
+| --age <min> [max]    | -a    | Age range for the character (min,max) or single number for constant age                                                                                                                                                             | 25 55   |
+| --veteran            | -v    | Generate characters with a few random skill increases already                                                                                                                                                                       | false   |
+| --damaged            | -d    | Generate characters with exposure to the Unnatural, leaving them damaged                                                                                                                                                            | false   |
+| --verbose            |       | Enable verbose output for debug purposes.                                                                                                                                                                                           | false   |
 
 ### Examples
 
-Generate a single FBI CID agent (default):
+Generate a single agent with a random profession (default):
 
 ```
 .\DGGenCs.exe
 ```
 
-Generate 5 random agents of the "author" profession:
+Generate a single agent with a profession from a specific employer:
 
 ```
-.\DGGenCs.exe --profession author --count 5
+.\DGGenCs.exe --employer ATF
+```
+
+Generate 5 random agents of the "federal_agent" profession:
+
+```
+.\DGGenCs.exe --profession federal_agent --count 5
 ```
 
 Generate 3 agents with random nationalities and veterancy:

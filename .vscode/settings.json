@@ -2,5 +2,8 @@
   "editor.defaultFormatter": "csharpier.csharpier-vscode",
   "[csharp]": {
     "editor.defaultFormatter": "csharpier.csharpier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   }
 }
